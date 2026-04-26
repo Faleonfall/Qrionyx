@@ -116,7 +116,13 @@ export default defineComponent({
         event.currentTarget.blur();
       }
 
-      emit(action);
+      if (action === "download-png") {
+        emit("download-png");
+      } else if (action === "download-svg") {
+        emit("download-svg");
+      } else {
+        emit("reset");
+      }
     }
 
     return {
