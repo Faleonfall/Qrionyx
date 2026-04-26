@@ -1,0 +1,36 @@
+{
+  "name": "qr",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -f generated/qr.png",
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "generate": "tsx src/scripts/generate.ts",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "qr-code-styling": "^1.9.2",
+    "vue": "^3.5.33"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/jsdom": "^28.0.1",
+    "@types/node": "^25.6.0",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/tsconfig": "^0.9.1",
+    "canvas": "^3.2.3",
+    "jsdom": "^29.0.2",
+    "tailwindcss": "^4.2.4",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10",
+    "vue-tsc": "^3.2.7"
+  }
+}

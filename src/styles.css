@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  --color-cyber-background: #0d0d16;
+  --color-panel: #161624;
+  --color-panel-border: #302a52;
+  --color-neon-cyan: #00f0ff;
+  --color-neon-pink: #ff007f;
+  --color-text-primary: #ffffff;
+  --color-text-muted: #c7c2da;
+  --font-cyber: "Orbitron", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--color-cyber-background);
+}
+
+body {
+  font-family: var(--font-cyber);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
