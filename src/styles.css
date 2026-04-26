@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --color-cyber-background: #0d0d16;
-  --color-panel: #161624;
-  --color-panel-border: #302a52;
-  --color-neon-cyan: #00f0ff;
-  --color-neon-pink: #ff007f;
+  --color-cyber-background: #071018;
+  --color-panel: #101827;
+  --color-panel-border: #3f5f8f;
+  --color-neon-cyan: #8be9ff;
+  --color-neon-pink: #a78bfa;
   --color-text-primary: #ffffff;
-  --color-text-muted: #c7c2da;
+  --color-text-muted: #c8d7ee;
   --font-cyber: "Orbitron", sans-serif;
 }
 

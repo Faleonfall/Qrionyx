@@ -1,6 +1,6 @@
 <template>
   <form class="rounded-3xl border border-[var(--color-panel-border)] bg-[color:var(--color-panel)]/80 p-5 shadow-2xl shadow-black/30 md:p-6" @submit.prevent>
-    <label class="block text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]" for="qr-url">URL</label>
+    <label class="block select-none text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]" for="qr-url">URL</label>
     <input
       id="qr-url"
       :value="url"
@@ -19,24 +19,24 @@
 
     <div class="mt-5 grid gap-4 md:grid-cols-2">
       <label class="block">
-        <span class="text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">QR Color</span>
-        <input :value="qrColor" class="mt-3 h-14 w-full rounded-2xl border border-[var(--color-panel-border)] bg-[var(--color-cyber-background)] p-2" type="color" @change="emitQrColor" />
+        <span class="select-none text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">QR Color</span>
+        <input :value="qrColor" class="color-input mt-3 h-14 w-full cursor-pointer rounded-2xl border border-[var(--color-panel-border)] bg-[var(--color-cyber-background)] p-0" type="color" title="Choose QR color" @change="emitQrColor" />
       </label>
 
       <label class="block">
-        <span class="text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Background</span>
-        <input :value="backgroundColor" class="mt-3 h-14 w-full rounded-2xl border border-[var(--color-panel-border)] bg-[var(--color-cyber-background)] p-2" type="color" @change="emitBackgroundColor" />
+        <span class="select-none text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Background</span>
+        <input :value="backgroundColor" class="color-input mt-3 h-14 w-full cursor-pointer rounded-2xl border border-[var(--color-panel-border)] bg-[var(--color-cyber-background)] p-0" type="color" title="Choose background color" @change="emitBackgroundColor" />
       </label>
     </div>
 
     <div class="mt-6 flex flex-wrap gap-3">
-      <button class="cursor-pointer rounded-full bg-[var(--color-neon-cyan)] px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-cyber-background)] transition hover:brightness-110" type="button" @click="$emit('download-png')">
+      <button class="cursor-pointer select-none rounded-full border border-[var(--color-neon-cyan)] px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-neon-cyan)] transition hover:bg-[var(--color-neon-cyan)] hover:text-[var(--color-cyber-background)]" type="button" @click="emitButtonAction($event, 'download-png')">
         PNG
       </button>
-      <button class="cursor-pointer rounded-full border border-[var(--color-neon-pink)] px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-neon-pink)] transition hover:bg-[var(--color-neon-pink)] hover:text-white" type="button" @click="$emit('download-svg')">
+      <button class="cursor-pointer select-none rounded-full border border-[var(--color-neon-pink)] px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-neon-pink)] transition hover:bg-[var(--color-neon-pink)] hover:text-white" type="button" @click="emitButtonAction($event, 'download-svg')">
         SVG
       </button>
-      <button class="cursor-pointer rounded-full border border-[var(--color-panel-border)] px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition hover:border-[var(--color-neon-cyan)] hover:text-[var(--color-neon-cyan)]" type="button" @click="$emit('reset')">
+      <button class="cursor-pointer select-none rounded-full border border-[var(--color-panel-border)] px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition hover:border-[var(--color-neon-cyan)] hover:text-[var(--color-neon-cyan)]" type="button" @click="emitButtonAction($event, 'reset')">
         Reset
       </button>
     </div>
@@ -48,6 +48,8 @@ import type { DotType, ErrorCorrectionLevel } from "qr-code-styling";
 import { defineComponent, type PropType } from "vue";
 import { dotOptions, errorCorrectionOptions } from "../qr/config";
 import FormSelect from "./FormSelect.vue";
+
+type ButtonAction = "download-png" | "download-svg" | "reset";
 
 export default defineComponent({
   name: "QrForm",
@@ -109,8 +111,17 @@ export default defineComponent({
       emit("update:errorCorrectionLevel", value as ErrorCorrectionLevel);
     }
 
+    function emitButtonAction(event: MouseEvent, action: ButtonAction) {
+      if (event.currentTarget instanceof HTMLButtonElement) {
+        event.currentTarget.blur();
+      }
+
+      emit(action);
+    }
+
     return {
       dotOptions,
+      emitButtonAction,
       emitBackgroundColor,
       emitDotType,
       emitErrorCorrectionLevel,
@@ -121,3 +132,23 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.color-input {
+  overflow: hidden;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-input::-webkit-color-swatch {
+  border: 0;
+  border-radius: 1rem;
+}
+
+.color-input::-moz-color-swatch {
+  border: 0;
+  border-radius: 1rem;
+}
+</style>

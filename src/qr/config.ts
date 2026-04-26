@@ -1,6 +1,6 @@
 import type { CornerDotType, CornerSquareType, DotType, ErrorCorrectionLevel, Options } from "qr-code-styling";
 
-export const DEFAULT_QR_COLOR = "#603AB0";
+export const DEFAULT_QR_COLOR = "#3B1E8F";
 export const DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
 export const QR_SIZE = 1024;
 export const PREVIEW_SIZE = 360;

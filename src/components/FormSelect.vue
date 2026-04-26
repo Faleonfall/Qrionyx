@@ -1,6 +1,6 @@
 <template>
   <label class="block">
-    <span class="text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">{{ label }}</span>
+    <span class="select-none text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">{{ label }}</span>
     <span class="relative mt-3 block">
       <select
         :value="modelValue"
@@ -9,7 +9,7 @@
       >
         <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
       </select>
-      <span class="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-xs text-[var(--color-text-muted)]">▼</span>
+      <span class="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 select-none text-xs text-[var(--color-text-muted)]">▼</span>
     </span>
   </label>
 </template>

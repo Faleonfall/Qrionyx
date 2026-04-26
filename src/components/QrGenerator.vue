@@ -1,9 +1,9 @@
 <template>
   <section class="mx-auto flex min-h-svh w-full max-w-6xl flex-col justify-center gap-8 px-5 py-10">
     <header class="max-w-3xl">
-      <p class="mb-3 text-sm uppercase tracking-[0.35em] text-[var(--color-neon-cyan)]">Local QR Tool</p>
-      <h1 class="text-4xl font-bold leading-tight md:text-6xl">Styled QR Generator</h1>
-      <p class="mt-4 text-base leading-7 text-[var(--color-text-muted)] md:text-lg">
+      <p class="select-none text-sm uppercase tracking-[0.35em] text-[var(--color-neon-cyan)]">qrionyx</p>
+      <h1 class="select-none whitespace-nowrap text-3xl font-bold leading-tight md:text-4xl">Local styled QR generator</h1>
+      <p class="mt-4 select-none text-base leading-7 text-[var(--color-text-muted)] md:text-lg">
         Generate the QR code in your browser. No backend, no upload, just local rendering.
       </p>
     </header>

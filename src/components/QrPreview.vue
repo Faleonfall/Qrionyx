@@ -3,7 +3,7 @@
     <div class="rounded-3xl bg-white p-5">
       <div class="relative aspect-square overflow-hidden rounded-2xl">
         <div ref="container" class="flex h-full w-full items-center justify-center [&>canvas]:block [&>canvas]:max-h-full [&>canvas]:max-w-full"></div>
-        <p v-if="!hasQr" class="absolute inset-0 grid place-items-center px-6 text-center text-sm leading-6 text-slate-500">Enter a URL to generate a QR code.</p>
+        <p v-if="!hasQr" class="absolute inset-0 grid select-none place-items-center px-6 text-center text-sm leading-6 text-slate-500">Enter a URL to generate a QR code.</p>
       </div>
     </div>
     <p class="mt-4 truncate text-sm leading-6 text-[var(--color-text-muted)]" :title="title">{{ previewUrl }}</p>
