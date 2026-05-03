@@ -1,5 +1,7 @@
 <template>
-  <main class="min-h-svh bg-[var(--color-cyber-background)] text-[var(--color-text-primary)]">
+  <main
+    class="min-h-svh bg-(--color-cyber-background) text-(--color-text-primary)"
+  >
     <QrGenerator />
   </main>
 </template>

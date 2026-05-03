@@ -1,15 +1,28 @@
 <template>
   <label class="block">
-    <span class="select-none text-sm uppercase tracking-[0.2em] text-[var(--color-text-muted)]">{{ label }}</span>
-    <span class="relative mt-3 block">
+    <span
+      class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+      >{{ label }}</span
+    >
+    <span class="relative mt-2 block">
       <select
         :value="modelValue"
-        class="w-full appearance-none rounded-2xl border border-[var(--color-panel-border)] bg-[var(--color-cyber-background)] py-4 pr-12 pl-4 text-sm text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-neon-cyan)]"
+        class="w-full min-w-0 appearance-none rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) py-2.5 pr-7.5 pl-2.5 text-[13px] text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
         @change="emitValue"
       >
-        <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
+        <option
+          v-for="option in options"
+          :key="option.value"
+          :value="option.value"
+        >
+          {{ option.label }}
+        </option>
       </select>
-      <span class="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 select-none text-xs text-[var(--color-text-muted)]">▼</span>
+      <span
+        class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 select-none text-[10px] text-(--color-text-muted)"
+        aria-hidden="true"
+        >▼</span
+      >
     </span>
   </label>
 </template>

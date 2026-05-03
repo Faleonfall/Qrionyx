@@ -7,9 +7,9 @@ qrionyx runs entirely on the client. Enter a URL, choose the QR shape and colors
 ## Features
 
 - **Local generation:** QR codes are rendered in the browser
-- **Styled output:** Choose dot, corner, and color options
+- **Styled output:** Adjust QR style, corners, margin, colors, and correction level
 - **Live preview:** See changes immediately while editing
-- **Download ready:** Export the generated QR code as an image
+- **Download ready:** Export PNG, WebP, or SVG at common pixel sizes
 - **Responsive layout:** Works comfortably on desktop and mobile screens
 
 ## Technology
@@ -36,3 +36,10 @@ npm run build
 ```
 
 The production files are generated in `dist/`.
+
+## Checks
+
+```sh
+npm run lint
+npm run format:check
+```
