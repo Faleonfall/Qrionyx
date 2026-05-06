@@ -1,6 +1,7 @@
 import type {
   CornerDotType,
   CornerSquareType,
+  DrawType,
   DotType,
   ErrorCorrectionLevel,
   Options,
@@ -8,7 +9,8 @@ import type {
 
 export const DEFAULT_QR_COLOR = "#3B1E8F";
 export const DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
-export const PREVIEW_SIZE = 300;
+export const PREVIEW_DISPLAY_SIZE = 300;
+export const PREVIEW_SIZE = 600;
 export const DEFAULT_EXPORT_SIZE: ExportSize = 1024;
 export const DEFAULT_FILENAME = "qr";
 export const DEFAULT_MARGIN_LEVEL: MarginLevel = "standard";
@@ -21,6 +23,7 @@ export type QrSettings = {
   data: string;
   qrColor: string;
   backgroundColor: string;
+  backgroundTransparent: boolean;
   dotType: DotType;
   cornerType: CornerSquareType;
   errorCorrectionLevel: ErrorCorrectionLevel;
@@ -85,8 +88,10 @@ export function createQrOptions(
   settings: QrSettings,
   width = PREVIEW_SIZE,
   height = PREVIEW_SIZE,
+  type: DrawType = "canvas",
 ): Options {
   return {
+    type,
     width,
     height,
     margin: getMarginSize(settings.marginLevel, width),
@@ -102,10 +107,13 @@ export function createQrOptions(
     },
     dotsOptions: {
       color: settings.qrColor,
+      roundSize: false,
       type: settings.dotType,
     },
     backgroundOptions: {
-      color: settings.backgroundColor,
+      color: settings.backgroundTransparent
+        ? "transparent"
+        : settings.backgroundColor,
     },
   };
 }

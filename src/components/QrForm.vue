@@ -66,13 +66,27 @@
           class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
           >Background</span
         >
-        <input
-          :value="backgroundColor"
-          class="color-input mt-2 h-10 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
-          type="color"
-          title="Choose background color"
-          @change="emitBackgroundColor"
-        />
+        <div class="mt-2 flex gap-2">
+          <input
+            :value="backgroundColor"
+            class="color-input h-10 min-w-0 flex-1 cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 disabled:cursor-not-allowed disabled:opacity-45"
+            type="color"
+            title="Choose background color"
+            :disabled="backgroundTransparent"
+            @change="emitBackgroundColor"
+          />
+          <label
+            class="flex h-10 cursor-pointer select-none items-center gap-2 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 text-[12px] font-bold uppercase tracking-[0.12em] text-(--color-text-muted)"
+          >
+            <input
+              :checked="backgroundTransparent"
+              class="accent-(--color-neon-cyan)"
+              type="checkbox"
+              @change="emitBackgroundTransparent"
+            />
+            Clear
+          </label>
+        </div>
       </label>
     </div>
 
@@ -165,6 +179,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    backgroundTransparent: {
+      type: Boolean,
+      required: true,
+    },
     canDownload: {
       type: Boolean,
       required: true,
@@ -208,6 +226,8 @@ export default defineComponent({
     "download-webp": null,
     reset: null,
     "update:backgroundColor": (value: string) => value.length > 0,
+    "update:backgroundTransparent": (value: boolean) =>
+      typeof value === "boolean",
     "update:cornerType": (value: CornerSquareType) => value.length > 0,
     "update:dotType": (value: DotType) => value.length > 0,
     "update:errorCorrectionLevel": (value: ErrorCorrectionLevel) =>
@@ -236,6 +256,13 @@ export default defineComponent({
 
     function emitBackgroundColor(event: Event) {
       emit("update:backgroundColor", getInputValue(event));
+    }
+
+    function emitBackgroundTransparent(event: Event) {
+      emit(
+        "update:backgroundTransparent",
+        event.target instanceof HTMLInputElement && event.target.checked,
+      );
     }
 
     function emitDotType(value: string) {
@@ -283,6 +310,7 @@ export default defineComponent({
       dotOptions,
       emitButtonAction,
       emitBackgroundColor,
+      emitBackgroundTransparent,
       emitCornerType,
       emitDotType,
       emitErrorCorrectionLevel,

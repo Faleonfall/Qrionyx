@@ -21,9 +21,10 @@
       </p>
     </header>
 
-    <div class="grid gap-4 lg:grid-cols-[minmax(0,720px)_320px]">
+    <div class="grid gap-4 lg:grid-cols-[minmax(0,720px)_350px]">
       <QrForm
         :background-color="backgroundColor"
+        :background-transparent="backgroundTransparent"
         :dot-type="dotType"
         :error-correction-level="errorCorrectionLevel"
         :export-size="exportSize"
@@ -38,6 +39,7 @@
         @download-webp="downloadWebp"
         @reset="resetQr"
         @update:background-color="updateBackgroundColor"
+        @update:background-transparent="updateBackgroundTransparent"
         @update:corner-type="updateCornerType"
         @update:dot-type="updateDotType"
         @update:error-correction-level="updateErrorCorrectionLevel"
@@ -50,6 +52,8 @@
 
       <QrPreview
         ref="qrPreview"
+        :background-color="backgroundColor"
+        :background-transparent="backgroundTransparent"
         :has-qr="hasQr"
         :preview-url="previewUrl"
         :title="qrUrl || 'Waiting for a URL...'"
@@ -88,6 +92,7 @@ export default defineComponent({
     const qrUrl = ref("");
     const qrColor = ref(DEFAULT_QR_COLOR);
     const backgroundColor = ref(DEFAULT_BACKGROUND_COLOR);
+    const backgroundTransparent = ref(false);
     const exportSize = ref<ExportSize>(DEFAULT_EXPORT_SIZE);
     const filename = ref(DEFAULT_FILENAME);
     const dotType = ref<DotType>("square");
@@ -139,6 +144,7 @@ export default defineComponent({
         data: qrUrl.value,
         qrColor: qrColor.value,
         backgroundColor: backgroundColor.value,
+        backgroundTransparent: backgroundTransparent.value,
         dotType: dotType.value,
         cornerType: cornerType.value,
         errorCorrectionLevel: errorCorrectionLevel.value,
@@ -154,12 +160,16 @@ export default defineComponent({
       }
 
       if (!qr) {
-        qr = new QRCodeStyling(createQrOptions(getSettings()));
+        qr = new QRCodeStyling(createPreviewQrOptions());
         qr.append(getQrContainer() || undefined);
         return;
       }
 
-      qr.update(createQrOptions(getSettings()));
+      qr.update(createPreviewQrOptions());
+    }
+
+    function createPreviewQrOptions() {
+      return createQrOptions(getSettings(), undefined, undefined, "svg");
     }
 
     function createDownloadQr() {
@@ -217,6 +227,10 @@ export default defineComponent({
       setAndUpdate(backgroundColor, value);
     }
 
+    function updateBackgroundTransparent(value: boolean) {
+      setAndUpdate(backgroundTransparent, value);
+    }
+
     function updateDotType(value: DotType) {
       setAndUpdate(dotType, value);
     }
@@ -245,6 +259,7 @@ export default defineComponent({
       qrUrl.value = "";
       qrColor.value = DEFAULT_QR_COLOR;
       backgroundColor.value = DEFAULT_BACKGROUND_COLOR;
+      backgroundTransparent.value = false;
       exportSize.value = DEFAULT_EXPORT_SIZE;
       filename.value = DEFAULT_FILENAME;
       dotType.value = "square";
@@ -258,13 +273,14 @@ export default defineComponent({
       await nextTick();
 
       if (hasQr.value) {
-        qr = new QRCodeStyling(createQrOptions(getSettings()));
+        qr = new QRCodeStyling(createPreviewQrOptions());
         qr.append(getQrContainer() || undefined);
       }
     });
 
     return {
       backgroundColor,
+      backgroundTransparent,
       canDownload,
       cornerType,
       dotType,
@@ -282,6 +298,7 @@ export default defineComponent({
       qrUrl,
       resetQr,
       updateBackgroundColor,
+      updateBackgroundTransparent,
       updateCornerType,
       updateDotType,
       updateErrorCorrectionLevel,
