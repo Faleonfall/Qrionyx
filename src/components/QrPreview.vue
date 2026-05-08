@@ -1,36 +1,47 @@
 <template>
-  <aside
-    class="rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-4 shadow-2xl shadow-black/30"
-  >
-    <div
-      class="mx-auto max-w-[350px] rounded-2xl p-1.25"
-      :class="{ 'transparent-preview': backgroundTransparent }"
-      :style="previewBackgroundStyle"
-    >
-      <div class="relative aspect-square overflow-hidden rounded-xl">
-        <div
-          ref="container"
-          class="preview-qr flex h-full w-full items-center justify-center"
-        ></div>
-        <p
-          v-if="!hasQr"
-          class="absolute inset-0 grid select-none place-items-center px-5 text-center text-sm leading-6 text-slate-500"
-        >
-          Enter a URL to generate a QR code.
-        </p>
+  <div class="self-center">
+    <div v-if="scanStatus !== 'idle'" class="mb-3 flex justify-center">
+      <div
+        class="scan-status select-none rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em]"
+        :class="scanStatusClass"
+      >
+        {{ scanStatusLabel }}
       </div>
     </div>
-    <p
-      class="mt-3 truncate text-sm leading-6 text-(--color-text-muted)"
-      :title="title"
+    <aside
+      class="rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-4 shadow-2xl shadow-black/30"
     >
-      {{ previewUrl }}
-    </p>
-  </aside>
+      <div
+        class="mx-auto max-w-87.5 rounded-2xl p-1.25"
+        :class="{ 'transparent-preview': backgroundTransparent }"
+        :style="previewBackgroundStyle"
+      >
+        <div class="relative aspect-square overflow-hidden rounded-xl">
+          <div
+            ref="container"
+            class="preview-qr flex h-full w-full items-center justify-center"
+          ></div>
+          <p
+            v-if="!hasQr"
+            class="absolute inset-0 grid select-none place-items-center px-5 text-center text-sm leading-6 text-slate-500"
+          >
+            Enter a URL to generate a QR code.
+          </p>
+        </div>
+      </div>
+      <p
+        class="preview-url mt-3 text-sm leading-6 text-(--color-text-muted)"
+        :title="title"
+      >
+        {{ previewUrl }}
+      </p>
+    </aside>
+  </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref, type PropType } from "vue";
+import type { QrScanStatus } from "../qr/scanQr";
 
 export default defineComponent({
   name: "QrPreview",
@@ -51,6 +62,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    scanStatus: {
+      type: String as PropType<QrScanStatus>,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -63,8 +78,33 @@ export default defineComponent({
         ? undefined
         : props.backgroundColor,
     }));
+    const scanStatusLabel = computed(() => {
+      if (props.scanStatus === "checking") {
+        return "Checking";
+      }
 
-    return { container, previewBackgroundStyle };
+      return props.scanStatus === "scannable"
+        ? "✓ Scannable"
+        : "✕ Low confidence";
+    });
+    const scanStatusClass = computed(() => {
+      if (props.scanStatus === "scannable") {
+        return "border-emerald-300/70 bg-emerald-300/15 text-emerald-100";
+      }
+
+      if (props.scanStatus === "checking") {
+        return "border-(--color-panel-border) bg-(--color-panel)/80 text-(--color-text-muted)";
+      }
+
+      return "border-(--color-neon-pink) bg-(--color-neon-pink)/15 text-(--color-neon-pink)";
+    });
+
+    return {
+      container,
+      previewBackgroundStyle,
+      scanStatusClass,
+      scanStatusLabel,
+    };
   },
 });
 </script>
@@ -92,5 +132,14 @@ export default defineComponent({
   max-height: 100%;
   max-width: 100%;
   width: 100%;
+}
+
+.preview-url {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
 }
 </style>

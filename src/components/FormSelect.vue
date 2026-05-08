@@ -7,7 +7,7 @@
     <span class="relative mt-2 block">
       <select
         :value="modelValue"
-        class="w-full min-w-0 appearance-none rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) py-2.5 pr-7.5 pl-2.5 text-[13px] text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
+        class="form-control h-11 w-full min-w-0 appearance-none rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) py-0 pr-8 pl-3 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
         @change="emitValue"
       >
         <option
@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import type { SelectOption } from "../qr/config";
+import type { SelectOption } from "../qr/qrTypes";
 
 export default defineComponent({
   name: "FormSelect",

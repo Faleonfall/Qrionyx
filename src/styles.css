@@ -28,3 +28,8 @@ input,
 select {
   font: inherit;
 }
+
+.form-control {
+  font-family: var(--font-cyber);
+  font-size: 15px;
+}

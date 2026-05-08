@@ -7,9 +7,12 @@ qrionyx runs entirely on the client. Enter a URL, choose the QR shape and colors
 ## Features
 
 - **Local generation:** QR codes are rendered in the browser
-- **Styled output:** Adjust QR style, corners, margin, colors, and correction level
+- **Styled output:** Adjust QR style, corners, margin, colors, gradients, and correction level
+- **Logo controls:** Add a logo, tune its size and padding, or clear it without resetting the QR
 - **Live preview:** See changes immediately while editing
+- **Scan confidence:** In-browser QR scan check shows whether the current preview is scannable
 - **Download ready:** Export PNG, WebP, or SVG at common pixel sizes
+- **Session restore:** Recent settings are kept briefly when the page is closed
 - **Responsive layout:** Works comfortably on desktop and mobile screens
 
 ## Technology
@@ -19,6 +22,7 @@ qrionyx runs entirely on the client. Enter a URL, choose the QR shape and colors
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [qr-code-styling](https://github.com/kozakdenys/qr-code-styling)
+- [jsQR](https://github.com/cozmo/jsQR)
 
 ## Local Development
 

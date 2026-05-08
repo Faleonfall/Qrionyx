@@ -57,7 +57,7 @@ export default tseslint.config(
   },
   js.configs.recommended,
   ...vue.configs["flat/essential"],
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.strictTypeChecked,
   {
     files: ["**/*.{js,ts,vue}"],
     languageOptions: {
