@@ -25,11 +25,41 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 2px;
+}
+
+.form-control:focus-visible,
+button:focus-visible:not(:disabled),
+input[type="color"]:focus-visible,
+.form-control:has(:focus-visible) {
+  outline: none;
+  border-color: var(--color-neon-cyan);
+}
+
+:focus-visible:disabled,
+[aria-disabled="true"]:focus-visible {
+  outline: none;
 }
 
 .form-control {
   font-family: var(--font-cyber);
   font-size: 15px;
+}
+
+select.form-control:hover:not(:disabled),
+input.form-control:hover:not(:disabled),
+div.form-control:hover,
+input[type="color"]:hover:not(:disabled) {
+  border-color: var(--color-neon-cyan);
+}
+
+select.form-control:hover:not(:disabled) {
+  color: var(--color-neon-cyan);
 }

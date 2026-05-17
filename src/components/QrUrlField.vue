@@ -1,8 +1,7 @@
 <template>
-  <label
+  <span
     class="block select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-    for="qr-url"
-    >URL</label
+    >URL</span
   >
   <input
     id="qr-url"

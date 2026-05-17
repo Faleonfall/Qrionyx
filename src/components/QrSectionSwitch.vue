@@ -1,9 +1,9 @@
 <template>
   <div
-    class="mt-3 inline-flex rounded-full border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
+    class="mt-4 inline-flex rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
   >
     <button
-      class="form-control cursor-pointer select-none rounded-full px-3 py-1 text-[12px] transition"
+      class="form-control cursor-pointer select-none rounded-lg border border-transparent px-3 py-1 text-[12px] transition"
       :class="getSectionClass('basic')"
       type="button"
       @click="$emit('update:activeSection', 'basic')"
@@ -11,7 +11,7 @@
       Basic
     </button>
     <button
-      class="form-control cursor-pointer select-none rounded-full px-3 py-1 text-[12px] transition"
+      class="form-control cursor-pointer select-none rounded-lg border border-transparent px-3 py-1 text-[12px] transition"
       :class="getSectionClass('advanced')"
       type="button"
       @click="$emit('update:activeSection', 'advanced')"

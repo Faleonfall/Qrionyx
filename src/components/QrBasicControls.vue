@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 grid grid-cols-4 gap-4">
+  <div class="mt-4 grid grid-cols-4 gap-4">
     <FormSelect
       :model-value="dotType"
       :options="dotOptions"
@@ -26,8 +26,8 @@
     />
   </div>
 
-  <div class="mt-3 grid grid-cols-2 gap-4">
-    <label class="block">
+  <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="block">
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >QR Color</span
@@ -39,9 +39,9 @@
         title="Choose QR color"
         @change="emitQrColor"
       />
-    </label>
+    </div>
 
-    <label class="block">
+    <div class="block">
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Background</span
@@ -67,17 +67,17 @@
           <span class="peer-checked:text-(--color-neon-cyan)">Clear</span>
         </label>
       </div>
-    </label>
+    </div>
   </div>
 
-  <div class="mt-3 grid grid-cols-2 gap-4">
+  <div class="mt-4 grid grid-cols-2 gap-4">
     <FormSelect
       :model-value="String(exportSize)"
       :options="exportSizeOptions"
       label="Size"
       @update:model-value="emitExportSize"
     />
-    <label class="block">
+    <div class="block">
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Filename</span
@@ -90,7 +90,7 @@
         placeholder="qr"
         @input="emitFilename"
       />
-    </label>
+    </div>
   </div>
 </template>
 

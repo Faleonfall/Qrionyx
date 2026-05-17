@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 space-y-3">
+  <div class="mt-4 space-y-4">
     <QrLogoControls
       :has-logo="hasLogo"
       :hide-background-dots="hideBackgroundDots"

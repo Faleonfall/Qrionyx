@@ -1,5 +1,5 @@
 <template>
-  <label class="block">
+  <div class="block" :class="{ 'pointer-events-none opacity-40': !hasLogo }">
     <span
       class="block h-6 truncate select-none text-xs uppercase leading-6 tracking-[0.18em] text-(--color-text-muted)"
     >
@@ -12,7 +12,7 @@
         ref="logoSlider"
         class="logo-size-slider min-w-0 flex-1 cursor-pointer"
         role="slider"
-        tabindex="0"
+        :tabindex="hasLogo ? 0 : -1"
         :aria-valuemax="100"
         :aria-valuemin="20"
         :aria-valuenow="imageSizePercent"
@@ -38,7 +38,7 @@
         {{ imageSizePercent }}%
       </span>
     </div>
-  </label>
+  </div>
 </template>
 
 <script lang="ts">
@@ -50,6 +50,10 @@ const imageSizeMaxPercent = 100;
 export default defineComponent({
   name: "QrLogoSizeSlider",
   props: {
+    hasLogo: {
+      type: Boolean,
+      required: true,
+    },
     imageSize: {
       type: Number,
       required: true,
@@ -164,9 +168,13 @@ export default defineComponent({
   touch-action: none;
 }
 
-.logo-size-slider:focus-visible .logo-size-slider-track {
-  outline: 2px solid var(--color-neon-cyan);
-  outline-offset: 4px;
+.logo-size-slider:focus-visible {
+  outline: none;
+}
+
+.logo-size-slider:focus-visible .logo-size-slider-fill,
+.logo-size-slider:focus-visible .logo-size-slider-thumb {
+  background: var(--color-neon-cyan);
 }
 
 .logo-size-slider-track {

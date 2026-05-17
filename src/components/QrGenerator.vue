@@ -28,6 +28,7 @@
         :background-round="backgroundRound"
         :background-transparent="backgroundTransparent"
         :can-download="canDownload"
+        :has-qr="hasQr"
         :corner-dot-color="cornerDotColor"
         :corner-square-color="cornerSquareColor"
         :corner-type="cornerType"
@@ -78,6 +79,7 @@
       <QrPreview
         ref="qrPreview"
         :background-color="backgroundColor"
+        :background-round="backgroundRound"
         :background-transparent="backgroundTransparent"
         :has-qr="hasQr"
         :preview-url="previewUrl"

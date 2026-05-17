@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-    <label class="block">
+    <div class="block">
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Corner box</span
@@ -12,8 +12,8 @@
         title="Choose corner square color"
         @change="emitCornerSquareColor"
       />
-    </label>
-    <label class="block">
+    </div>
+    <div class="block">
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Corner dot</span
@@ -25,7 +25,7 @@
         title="Choose corner dot color"
         @change="emitCornerDotColor"
       />
-    </label>
+    </div>
     <FormSelect
       :model-value="shapeType"
       :options="shapeOptions"
@@ -40,14 +40,17 @@
     />
   </div>
 
-  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+  <div class="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
     <FormSelect
       :model-value="dotsGradientType"
       :options="gradientOptions"
       label="Gradient"
       @update:model-value="emitDotsGradientType"
     />
-    <label class="block">
+    <div
+      class="block"
+      :class="{ 'pointer-events-none opacity-40': dotsGradientType === 'none' }"
+    >
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Gradient from</span
@@ -60,8 +63,11 @@
         :disabled="dotsGradientType === 'none'"
         @change="emitDotsGradientStartColor"
       />
-    </label>
-    <label class="block">
+    </div>
+    <div
+      class="block"
+      :class="{ 'pointer-events-none opacity-40': dotsGradientType === 'none' }"
+    >
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Gradient to</span
@@ -74,7 +80,7 @@
         :disabled="dotsGradientType === 'none'"
         @change="emitDotsGradientEndColor"
       />
-    </label>
+    </div>
   </div>
 </template>
 

@@ -31,6 +31,7 @@
     </div>
 
     <QrLogoSizeSlider
+      :has-logo="hasLogo"
       :image-size="imageSize"
       :image-size-max-percent="imageSizeMaxPercent"
       :rendered-logo-size="renderedLogoSize"
@@ -38,13 +39,14 @@
     />
 
     <FormSelect
+      :disabled="!hasLogo"
       :model-value="String(imageMargin)"
       :options="imageMarginOptions"
       label="Logo pad"
       @update:model-value="emitImageMargin"
     />
 
-    <label class="block">
+    <div class="block" :class="{ 'pointer-events-none opacity-40': !hasLogo }">
       <span
         class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Logo dots</span
@@ -54,13 +56,14 @@
       >
         <input
           :checked="hideBackgroundDots"
+          :disabled="!hasLogo"
           class="peer sr-only"
           type="checkbox"
           @change="emitHideBackgroundDots"
         />
         <span class="peer-checked:text-(--color-neon-cyan)">Hide</span>
       </label>
-    </label>
+    </div>
   </div>
 </template>
 

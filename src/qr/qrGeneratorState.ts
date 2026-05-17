@@ -11,6 +11,9 @@ import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_BACKGROUND_ROUND,
   DEFAULT_CORNER_TYPE,
+  DEFAULT_DOTS_GRADIENT_END_COLOR,
+  DEFAULT_DOT_TYPE,
+  DEFAULT_ERROR_CORRECTION_LEVEL,
   DEFAULT_EXPORT_SIZE,
   DEFAULT_FILENAME,
   DEFAULT_IMAGE_MARGIN,
@@ -38,9 +41,11 @@ export function createQrGeneratorState() {
   const exportSize = ref<ExportSize>(DEFAULT_EXPORT_SIZE);
   const filename = ref(DEFAULT_FILENAME);
   const advancedResetKey = ref(0);
-  const dotType = ref<DotType>("square");
+  const dotType = ref<DotType>(DEFAULT_DOT_TYPE);
   const cornerType = ref<CornerSquareType>(DEFAULT_CORNER_TYPE);
-  const errorCorrectionLevel = ref<ErrorCorrectionLevel>("M");
+  const errorCorrectionLevel = ref<ErrorCorrectionLevel>(
+    DEFAULT_ERROR_CORRECTION_LEVEL,
+  );
   const marginLevel = ref<MarginLevel>(DEFAULT_MARGIN_LEVEL);
   const shapeType = ref<ShapeType>(DEFAULT_SHAPE_TYPE);
   const image = ref("");
@@ -51,7 +56,7 @@ export function createQrGeneratorState() {
   const cornerDotColor = ref("");
   const dotsGradientType = ref<GradientMode>("none");
   const dotsGradientStartColor = ref(DEFAULT_QR_COLOR);
-  const dotsGradientEndColor = ref("#8BE9FF");
+  const dotsGradientEndColor = ref(DEFAULT_DOTS_GRADIENT_END_COLOR);
   const renderedLogoSize = ref("");
   const imageNaturalSize = ref<ImageNaturalSize | null>(null);
   const qrModuleCount = ref(0);
@@ -105,9 +110,9 @@ export function createQrGeneratorState() {
     exportSize.value = DEFAULT_EXPORT_SIZE;
     filename.value = DEFAULT_FILENAME;
     advancedResetKey.value += 1;
-    dotType.value = "square";
+    dotType.value = DEFAULT_DOT_TYPE;
     cornerType.value = DEFAULT_CORNER_TYPE;
-    errorCorrectionLevel.value = "M";
+    errorCorrectionLevel.value = DEFAULT_ERROR_CORRECTION_LEVEL;
     marginLevel.value = DEFAULT_MARGIN_LEVEL;
     shapeType.value = DEFAULT_SHAPE_TYPE;
     image.value = "";
@@ -119,7 +124,7 @@ export function createQrGeneratorState() {
     cornerDotColor.value = "";
     dotsGradientType.value = "none";
     dotsGradientStartColor.value = DEFAULT_QR_COLOR;
-    dotsGradientEndColor.value = "#8BE9FF";
+    dotsGradientEndColor.value = DEFAULT_DOTS_GRADIENT_END_COLOR;
   }
 
   const sessionRefs: SavedQrSessionRefs = {

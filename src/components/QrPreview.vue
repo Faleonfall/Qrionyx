@@ -1,41 +1,49 @@
 <template>
   <div class="self-center">
-    <div v-if="scanStatus !== 'idle'" class="mb-3 flex justify-center">
+    <div class="relative">
       <div
-        class="scan-status select-none rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em]"
-        :class="scanStatusClass"
+        v-if="scanStatus !== 'idle'"
+        class="absolute -top-10 left-0 right-0 flex justify-center"
       >
-        {{ scanStatusLabel }}
-      </div>
-    </div>
-    <aside
-      class="rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-4 shadow-2xl shadow-black/30"
-    >
-      <div
-        class="mx-auto max-w-87.5 rounded-2xl p-1.25"
-        :class="{ 'transparent-preview': backgroundTransparent }"
-        :style="previewBackgroundStyle"
-      >
-        <div class="relative aspect-square overflow-hidden rounded-xl">
-          <div
-            ref="container"
-            class="preview-qr flex h-full w-full items-center justify-center"
-          ></div>
-          <p
-            v-if="!hasQr"
-            class="absolute inset-0 grid select-none place-items-center px-5 text-center text-sm leading-6 text-slate-500"
-          >
-            Enter a URL to generate a QR code.
-          </p>
+        <div
+          class="scan-status select-none rounded-xl border px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em]"
+          :class="scanStatusClass"
+        >
+          {{ scanStatusLabel }}
         </div>
       </div>
-      <p
-        class="preview-url mt-3 text-sm leading-6 text-(--color-text-muted)"
-        :title="title"
+      <aside
+        class="rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-4 shadow-2xl shadow-black/30"
       >
-        {{ previewUrl }}
-      </p>
-    </aside>
+        <div
+          class="mx-auto max-w-87.5 p-1.25"
+          :class="{ 'transparent-preview': backgroundTransparent }"
+          :style="[previewBackgroundStyle, backgroundRoundStyle]"
+        >
+          <div
+            class="relative aspect-square overflow-hidden"
+            :style="backgroundRoundStyle"
+          >
+            <div
+              ref="container"
+              class="preview-qr flex h-full w-full items-center justify-center"
+            ></div>
+            <p
+              v-if="!hasQr"
+              class="absolute inset-0 grid select-none place-items-center px-5 text-center text-sm leading-6 text-slate-500"
+            >
+              Enter a URL to generate a QR code.
+            </p>
+          </div>
+        </div>
+        <p
+          class="preview-url mt-3 text-sm leading-6 text-(--color-text-muted)"
+          :title="title"
+        >
+          {{ previewUrl }}
+        </p>
+      </aside>
+    </div>
   </div>
 </template>
 
@@ -48,6 +56,10 @@ export default defineComponent({
   props: {
     backgroundColor: {
       type: String,
+      required: true,
+    },
+    backgroundRound: {
+      type: Number,
       required: true,
     },
     backgroundTransparent: {
@@ -78,6 +90,9 @@ export default defineComponent({
         ? undefined
         : props.backgroundColor,
     }));
+    const backgroundRoundStyle = computed(() => ({
+      borderRadius: `${String(props.backgroundRound * 50)}%`,
+    }));
     const scanStatusLabel = computed(() => {
       if (props.scanStatus === "checking") {
         return "Checking";
@@ -100,6 +115,7 @@ export default defineComponent({
     });
 
     return {
+      backgroundRoundStyle,
       container,
       previewBackgroundStyle,
       scanStatusClass,
