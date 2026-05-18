@@ -7,7 +7,7 @@
       >
       <input
         :value="cornerSquareColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
+        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
         type="color"
         title="Choose corner square color"
         @change="emitCornerSquareColor"
@@ -20,7 +20,7 @@
       >
       <input
         :value="cornerDotColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
+        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
         type="color"
         title="Choose corner dot color"
         @change="emitCornerDotColor"
@@ -57,7 +57,7 @@
       >
       <input
         :value="dotsGradientStartColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 disabled:cursor-not-allowed disabled:opacity-45"
+        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
         type="color"
         title="Choose gradient start color"
         :disabled="dotsGradientType === 'none'"
@@ -74,7 +74,7 @@
       >
       <input
         :value="dotsGradientEndColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 disabled:cursor-not-allowed disabled:opacity-45"
+        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
         type="color"
         title="Choose gradient end color"
         :disabled="dotsGradientType === 'none'"

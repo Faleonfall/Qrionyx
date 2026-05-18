@@ -6,9 +6,23 @@
   --color-panel-border: #3f5f8f;
   --color-neon-cyan: #8be9ff;
   --color-neon-pink: #a78bfa;
+  --color-status-success: #34d399;
   --color-text-primary: #ffffff;
   --color-text-muted: #c8d7ee;
   --font-cyber: "Orbitron", sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-cyber-background: #f1f5f9;
+    --color-panel: #ffffff;
+    --color-panel-border: #cbd5e1;
+    --color-neon-cyan: #0284c7;
+    --color-neon-pink: #7c3aed;
+    --color-status-success: #059669;
+    --color-text-primary: #0f172a;
+    --color-text-muted: #64748b;
+  }
 }
 
 html,

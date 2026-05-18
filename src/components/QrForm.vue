@@ -14,66 +14,88 @@
         @update:active-section="updateActiveSection"
       />
 
-      <QrBasicControls
-        v-if="activeSection === 'basic'"
-        :background-color="backgroundColor"
-        :background-transparent="backgroundTransparent"
-        :corner-type="cornerType"
-        :dot-type="dotType"
-        :error-correction-level="errorCorrectionLevel"
-        :export-size="exportSize"
-        :filename="filename"
-        :margin-level="marginLevel"
-        :qr-color="qrColor"
-        @update:background-color="$emit('update:backgroundColor', $event)"
-        @update:background-transparent="
-          $emit('update:backgroundTransparent', $event)
-        "
-        @update:corner-type="$emit('update:cornerType', $event)"
-        @update:dot-type="$emit('update:dotType', $event)"
-        @update:error-correction-level="
-          $emit('update:errorCorrectionLevel', $event)
-        "
-        @update:export-size="$emit('update:exportSize', $event)"
-        @update:filename="$emit('update:filename', $event)"
-        @update:margin-level="$emit('update:marginLevel', $event)"
-        @update:qr-color="$emit('update:qrColor', $event)"
-      />
+      <div class="grid relative overflow-hidden">
+        <div
+          class="col-start-1 row-start-1 transition-all duration-150 ease-in-out"
+          :class="
+            activeSection === 'basic'
+              ? 'z-10 translate-x-0 opacity-100'
+              : 'pointer-events-none z-0 -translate-x-8 opacity-0'
+          "
+        >
+          <QrBasicControls
+            :background-color="backgroundColor"
+            :background-transparent="backgroundTransparent"
+            :corner-type="cornerType"
+            :dot-type="dotType"
+            :error-correction-level="errorCorrectionLevel"
+            :export-size="exportSize"
+            :filename="filename"
+            :margin-level="marginLevel"
+            :qr-color="qrColor"
+            @update:background-color="$emit('update:backgroundColor', $event)"
+            @update:background-transparent="
+              $emit('update:backgroundTransparent', $event)
+            "
+            @update:corner-type="$emit('update:cornerType', $event)"
+            @update:dot-type="$emit('update:dotType', $event)"
+            @update:error-correction-level="
+              $emit('update:errorCorrectionLevel', $event)
+            "
+            @update:export-size="$emit('update:exportSize', $event)"
+            @update:filename="$emit('update:filename', $event)"
+            @update:margin-level="$emit('update:marginLevel', $event)"
+            @update:qr-color="$emit('update:qrColor', $event)"
+          />
+        </div>
 
-      <QrAdvancedControls
-        v-else
-        :key="advancedResetKey"
-        :background-round="backgroundRound"
-        :corner-dot-color="cornerDotColor || qrColor"
-        :corner-square-color="cornerSquareColor || qrColor"
-        :dots-gradient-end-color="dotsGradientEndColor"
-        :dots-gradient-start-color="dotsGradientStartColor"
-        :dots-gradient-type="dotsGradientType"
-        :has-logo="hasLogo"
-        :hide-background-dots="hideBackgroundDots"
-        :image-margin="imageMargin"
-        :image-size="imageSize"
-        :image-size-max-percent="imageSizeMaxPercent"
-        :rendered-logo-size="renderedLogoSize"
-        :shape-type="shapeType"
-        @update:background-round="$emit('update:backgroundRound', $event)"
-        @update:corner-dot-color="$emit('update:cornerDotColor', $event)"
-        @update:corner-square-color="$emit('update:cornerSquareColor', $event)"
-        @update:dots-gradient-end-color="
-          $emit('update:dotsGradientEndColor', $event)
-        "
-        @update:dots-gradient-start-color="
-          $emit('update:dotsGradientStartColor', $event)
-        "
-        @update:dots-gradient-type="$emit('update:dotsGradientType', $event)"
-        @update:hide-background-dots="
-          $emit('update:hideBackgroundDots', $event)
-        "
-        @update:image-margin="$emit('update:imageMargin', $event)"
-        @update:image-size="$emit('update:imageSize', $event)"
-        @update:logo-file="$emit('update:logoFile', $event)"
-        @update:shape-type="$emit('update:shapeType', $event)"
-      />
+        <div
+          class="col-start-1 row-start-1 transition-all duration-150 ease-in-out"
+          :class="
+            activeSection === 'advanced'
+              ? 'z-10 translate-x-0 opacity-100'
+              : 'pointer-events-none z-0 translate-x-8 opacity-0'
+          "
+        >
+          <QrAdvancedControls
+            :key="advancedResetKey"
+            :background-round="backgroundRound"
+            :corner-dot-color="cornerDotColor || qrColor"
+            :corner-square-color="cornerSquareColor || qrColor"
+            :dots-gradient-end-color="dotsGradientEndColor"
+            :dots-gradient-start-color="dotsGradientStartColor"
+            :dots-gradient-type="dotsGradientType"
+            :has-logo="hasLogo"
+            :hide-background-dots="hideBackgroundDots"
+            :image-margin="imageMargin"
+            :image-size="imageSize"
+            :image-size-max-percent="imageSizeMaxPercent"
+            :rendered-logo-size="renderedLogoSize"
+            :shape-type="shapeType"
+            @update:background-round="$emit('update:backgroundRound', $event)"
+            @update:corner-dot-color="$emit('update:cornerDotColor', $event)"
+            @update:corner-square-color="
+              $emit('update:cornerSquareColor', $event)
+            "
+            @update:dots-gradient-end-color="
+              $emit('update:dotsGradientEndColor', $event)
+            "
+            @update:dots-gradient-start-color="
+              $emit('update:dotsGradientStartColor', $event)
+            "
+            @update:dots-gradient-type="
+              $emit('update:dotsGradientType', $event)
+            "
+            @update:hide-background-dots="
+              $emit('update:hideBackgroundDots', $event)
+            "
+            @update:image-margin="$emit('update:imageMargin', $event)"
+            @update:image-size="$emit('update:imageSize', $event)"
+            @update:logo-file="$emit('update:logoFile', $event)"
+            @update:shape-type="$emit('update:shapeType', $event)"
+          />
+        </div>
+      </div>
 
       <QrExportActions
         :can-download="canDownload"

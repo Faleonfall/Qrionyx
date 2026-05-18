@@ -104,7 +104,7 @@ export default defineComponent({
     });
     const scanStatusClass = computed(() => {
       if (props.scanStatus === "scannable") {
-        return "border-emerald-300/70 bg-emerald-300/15 text-emerald-100";
+        return "border-(--color-status-success) bg-(--color-status-success)/15 text-(--color-status-success)";
       }
 
       if (props.scanStatus === "checking") {

@@ -1,9 +1,15 @@
 <template>
   <div
-    class="mt-4 inline-flex rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
+    class="mt-4 relative grid h-11 w-52 grid-cols-2 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
   >
+    <!-- Sliding pill background -->
+    <div
+      class="absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-lg bg-(--color-neon-cyan) transition-transform duration-150 ease-out"
+      :class="activeSection === 'basic' ? 'translate-x-0' : 'translate-x-full'"
+    ></div>
+
     <button
-      class="form-control cursor-pointer select-none rounded-lg border border-transparent px-3 py-1 text-[12px] transition"
+      class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[12px] transition-colors duration-150"
       :class="getSectionClass('basic')"
       type="button"
       @click="$emit('update:activeSection', 'basic')"
@@ -11,7 +17,7 @@
       Basic
     </button>
     <button
-      class="form-control cursor-pointer select-none rounded-lg border border-transparent px-3 py-1 text-[12px] transition"
+      class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[12px] transition-colors duration-150"
       :class="getSectionClass('advanced')"
       type="button"
       @click="$emit('update:activeSection', 'advanced')"
@@ -40,7 +46,7 @@ export default defineComponent({
   setup(props) {
     function getSectionClass(section: FormSection) {
       return props.activeSection === section
-        ? "bg-(--color-neon-cyan) text-(--color-cyber-background)"
+        ? "text-(--color-cyber-background) font-bold"
         : "text-(--color-text-muted) hover:text-(--color-neon-cyan)";
     }
 
