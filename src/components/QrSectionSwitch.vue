@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mt-4 relative grid h-11 w-52 grid-cols-2 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
+    class="mt-1.5 sm:mt-4 relative grid h-9 sm:h-11 w-44 sm:w-52 grid-cols-2 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1"
   >
     <!-- Sliding pill background -->
     <div
@@ -9,7 +9,7 @@
     ></div>
 
     <button
-      class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[12px] transition-colors duration-150"
+      class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[11px] sm:text-[12px] transition-colors duration-150"
       :class="getSectionClass('basic')"
       type="button"
       @click="$emit('update:activeSection', 'basic')"
@@ -17,7 +17,7 @@
       Basic
     </button>
     <button
-      class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[12px] transition-colors duration-150"
+      class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[11px] sm:text-[12px] transition-colors duration-150"
       :class="getSectionClass('advanced')"
       type="button"
       @click="$emit('update:activeSection', 'advanced')"

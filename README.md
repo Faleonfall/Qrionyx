@@ -1,49 +1,44 @@
 # qrionyx
 
-> A small local QR code generator for creating styled QR codes in the browser.
+qrionyx is a web tool that runs entirely in your browser to generate styled, customized QR codes locally.
 
-qrionyx runs entirely on the client. Enter a URL, choose the QR shape and colors, preview the result, and download the generated code without sending the content to a server.
+## How it Works in Your Browser
 
-## Features
+- **Zero Installs**: You do not need to download or install any applications on your computer. Simply open the web page and start generating.
+- **Complete Privacy**: All QR generation and validation is done locally on your machine. Your URLs and texts are never uploaded to a server, keeping your data fully private.
+- **Offline Capable**: Once the page is loaded, it can run entirely offline without an active internet connection.
+- **Real-Time Previews**: See your color adjustments, visual shapes, and design options updated instantly in the live preview.
 
-- **Local generation:** QR codes are rendered in the browser
-- **Styled output:** Adjust QR style, corners, margin, colors, gradients, and correction level
-- **Logo controls:** Add a logo, tune its size and padding, or clear it without resetting the QR
-- **Live preview:** See changes immediately while editing
-- **Scan confidence:** In-browser QR scan check shows whether the current preview is scannable
-- **Download ready:** Export PNG, WebP, or SVG at common pixel sizes
-- **Session restore:** Recent settings are kept briefly when the page is closed
-- **Responsive layout:** Works comfortably on desktop and mobile screens
+## Quick Start
 
-## Technology
+1. Open the website.
+2. Enter the URL or text you want to encode.
+3. Customize the visual styles, colors, gradients, and optional logo overlay.
+4. Verify scannability with the automatic confidence check.
+5. Export the generated QR code as PNG, WebP, or SVG.
 
-- [Vue 3](https://vuejs.org/)
-- [Vite](https://vite.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [qr-code-styling](https://github.com/kozakdenys/qr-code-styling)
-- [jsQR](https://github.com/cozmo/jsQR)
+## Technologies Used
 
-## Local Development
+- **Framework**: Vue 3
+- **Bundler & Server**: Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **QR Core**: qr-code-styling & jsQR
 
-```sh
-git clone git@github.com:Faleonfall/qrionyx.git
-cd qrionyx
-npm install
-npm run dev
-```
+## Running Locally (for Developers)
 
-## Build
+If you want to run the project code locally on your machine:
 
-```sh
-npm run build
-```
+1. Install dependencies:
 
-The production files are generated in `dist/`.
+   ```bash
+   npm install
+   ```
 
-## Checks
+2. Start the local development server:
 
-```sh
-npm run lint
-npm run format:check
-```
+   ```bash
+   npm run dev
+   ```
+
+3. Open the address shown in your terminal (usually `http://localhost:5173`).

@@ -1,12 +1,12 @@
 <template>
-  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+  <div class="grid grid-cols-2 gap-1.5 sm:gap-4 lg:grid-cols-4">
     <div class="block">
       <span
-        class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Logo</span
       >
       <div
-        class="form-control mt-2 flex h-11 select-none items-center gap-2 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 py-0 text-(--color-text-primary)"
+        class="form-control mt-1.5 sm:mt-2 flex h-9 sm:h-11 select-none items-center gap-1.5 sm:gap-2 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-2 sm:px-3 py-0 text-(--color-text-primary)"
       >
         <label
           class="min-w-0 flex-1 cursor-pointer truncate transition hover:text-(--color-neon-cyan)"
@@ -20,7 +20,7 @@
           Choose
         </label>
         <button
-          class="cursor-pointer text-[12px] text-(--color-text-muted) transition hover:text-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:text-(--color-text-muted)"
+          class="cursor-pointer text-[10px] sm:text-[12px] text-(--color-text-muted) transition hover:text-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:text-(--color-text-muted)"
           type="button"
           :disabled="!hasLogo"
           @click="emitRemoveLogo"
@@ -48,11 +48,11 @@
 
     <div class="block" :class="{ 'pointer-events-none opacity-40': !hasLogo }">
       <span
-        class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Logo dots</span
       >
       <label
-        class="form-control mt-2 flex h-11 cursor-pointer select-none items-center rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 py-0 text-(--color-text-primary) transition hover:border-(--color-neon-cyan)"
+        class="form-control mt-1.5 sm:mt-2 flex h-9 sm:h-11 cursor-pointer select-none items-center rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-2.5 sm:px-3 py-0 text-(--color-text-primary) transition hover:border-(--color-neon-cyan)"
       >
         <input
           :checked="hideBackgroundDots"

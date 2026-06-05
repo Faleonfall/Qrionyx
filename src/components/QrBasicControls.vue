@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="mt-4 grid grid-cols-4 gap-4">
+    <div
+      class="mt-1.5 sm:mt-4 grid grid-cols-2 sm:grid-cols-4 gap-x-3 gap-y-1.5 sm:gap-4"
+    >
       <FormSelect
         :model-value="dotType"
         :options="dotOptions"
@@ -27,15 +29,15 @@
       />
     </div>
 
-    <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="mt-1.5 sm:mt-4 grid grid-cols-2 gap-1.5 sm:gap-4">
       <div class="block">
         <span
-          class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+          class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
           >QR Color</span
         >
         <input
           :value="qrColor"
-          class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
+          class="color-input mt-1 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
           type="color"
           title="Choose QR color"
           @change="emitQrColor"
@@ -44,20 +46,20 @@
 
       <div class="block">
         <span
-          class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+          class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
           >Background</span
         >
-        <div class="mt-2 flex gap-2">
+        <div class="mt-1 sm:mt-2 flex gap-1.5 sm:gap-2">
           <input
             :value="backgroundColor"
-            class="color-input h-11 min-w-0 flex-1 cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
+            class="color-input h-9 sm:h-11 min-w-0 flex-1 cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
             type="color"
             title="Choose background color"
             :disabled="backgroundTransparent"
             @change="emitBackgroundColor"
           />
           <label
-            class="form-control flex h-11 cursor-pointer select-none items-center rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 text-(--color-text-primary) transition hover:border-(--color-neon-cyan)"
+            class="form-control flex h-9 sm:h-11 cursor-pointer select-none items-center rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-2 sm:px-3 text-(--color-text-primary) transition hover:border-(--color-neon-cyan)"
           >
             <input
               :checked="backgroundTransparent"
@@ -71,7 +73,7 @@
       </div>
     </div>
 
-    <div class="mt-4 grid grid-cols-2 gap-4">
+    <div class="mt-1.5 sm:mt-4 grid grid-cols-2 gap-1.5 sm:gap-4">
       <FormSelect
         :model-value="String(exportSize)"
         :options="exportSizeOptions"
@@ -80,12 +82,12 @@
       />
       <div class="block">
         <span
-          class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+          class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
           >Filename</span
         >
         <input
           :value="filename"
-          class="form-control mt-2 h-11 w-full rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-4 py-0 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
+          class="form-control mt-1 sm:mt-2 h-9 sm:h-11 w-full rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 sm:px-4 py-0 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
           type="text"
           autocomplete="off"
           placeholder="qr"

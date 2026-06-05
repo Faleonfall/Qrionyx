@@ -14,13 +14,13 @@
         @update:active-section="updateActiveSection"
       />
 
-      <div class="grid relative overflow-hidden">
+      <div class="relative overflow-hidden w-full">
         <div
-          class="col-start-1 row-start-1 transition-all duration-150 ease-in-out"
+          class="transition-all duration-150 ease-in-out"
           :class="
             activeSection === 'basic'
-              ? 'z-10 translate-x-0 opacity-100'
-              : 'pointer-events-none z-0 -translate-x-8 opacity-0'
+              ? 'relative z-10 translate-x-0 opacity-100'
+              : 'absolute left-0 top-0 w-full pointer-events-none z-0 -translate-x-8 opacity-0'
           "
         >
           <QrBasicControls
@@ -50,11 +50,11 @@
         </div>
 
         <div
-          class="col-start-1 row-start-1 transition-all duration-150 ease-in-out"
+          class="transition-all duration-150 ease-in-out"
           :class="
             activeSection === 'advanced'
-              ? 'z-10 translate-x-0 opacity-100'
-              : 'pointer-events-none z-0 translate-x-8 opacity-0'
+              ? 'relative z-10 translate-x-0 opacity-100'
+              : 'absolute left-0 top-0 w-full pointer-events-none z-0 translate-x-8 opacity-0'
           "
         >
           <QrAdvancedControls

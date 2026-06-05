@@ -57,9 +57,12 @@ export default tseslint.config(
   },
   js.configs.recommended,
   ...vue.configs["flat/essential"],
-  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.strictTypeChecked.map((config) => ({
+    ...config,
+    files: ["**/*.{ts,vue}"],
+  })),
   {
-    files: ["**/*.{js,ts,vue}"],
+    files: ["**/*.{ts,vue}"],
     languageOptions: {
       parser: vueParser,
       parserOptions: {
@@ -81,8 +84,8 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
+          argsIgnorePattern: "^_|^\\$",
+          varsIgnorePattern: "^_|^\\$",
         },
       ],
       "@typescript-eslint/no-floating-promises": "error",
@@ -112,6 +115,14 @@ export default tseslint.config(
           max: 100,
         },
       ],
+
+      // Vue overrides
+      "vue/max-attributes-per-line": "off",
+      "vue/singleline-html-element-content-newline": "off",
+      "vue/html-self-closing": "off",
+      "vue/multi-word-component-names": "off",
+      "vue/html-closing-bracket-newline": "off",
+      "vue/html-indent": "off",
     },
   },
 );

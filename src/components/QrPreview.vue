@@ -1,9 +1,10 @@
 <template>
   <div class="self-center">
     <div class="relative">
+      <!-- Badge position for desktop (outside top) -->
       <div
         v-if="scanStatus !== 'idle'"
-        class="absolute -top-10 left-0 right-0 flex justify-center"
+        class="hidden lg:flex absolute -top-10 left-0 right-0 justify-center"
       >
         <div
           class="scan-status select-none rounded-xl border px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em]"
@@ -12,9 +13,22 @@
           {{ scanStatusLabel }}
         </div>
       </div>
+
       <aside
-        class="rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-4 shadow-2xl shadow-black/30"
+        class="relative rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-4 pt-8 lg:pt-4 shadow-2xl shadow-black/30"
       >
+        <!-- Badge position for mobile (inside top) -->
+        <div
+          v-if="scanStatus !== 'idle'"
+          class="absolute top-2 left-0 right-0 flex lg:hidden justify-center"
+        >
+          <div
+            class="scan-status select-none rounded-xl border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]"
+            :class="scanStatusClass"
+          >
+            {{ scanStatusLabel }}
+          </div>
+        </div>
         <div
           class="mx-auto max-w-87.5 p-1.25"
           :class="{ 'transparent-preview': backgroundTransparent }"

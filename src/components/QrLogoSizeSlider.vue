@@ -1,12 +1,12 @@
 <template>
   <div class="block" :class="{ 'pointer-events-none opacity-40': !hasLogo }">
     <span
-      class="block h-6 truncate select-none text-xs uppercase leading-6 tracking-[0.18em] text-(--color-text-muted)"
+      class="block h-5 sm:h-6 truncate select-none text-[10px] sm:text-xs uppercase leading-5 sm:leading-6 tracking-[0.18em] text-(--color-text-muted)"
     >
       Logo size
     </span>
     <div
-      class="form-control mt-2 flex h-11 items-center gap-3 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 py-0 text-(--color-text-primary)"
+      class="form-control mt-1.5 sm:mt-2 flex h-9 sm:h-11 items-center gap-2 sm:gap-3 rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-2 sm:px-3 py-0 text-(--color-text-primary)"
     >
       <div
         ref="logoSlider"
@@ -32,7 +32,7 @@
         </div>
       </div>
       <span
-        class="w-10 shrink-0 whitespace-nowrap text-right text-[12px]"
+        class="w-8 sm:w-10 shrink-0 whitespace-nowrap text-right text-[10px] sm:text-[12px]"
         :title="renderedLogoSize"
       >
         {{ imageSizePercent }}%

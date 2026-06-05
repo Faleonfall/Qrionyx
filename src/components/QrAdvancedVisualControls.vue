@@ -1,13 +1,13 @@
 <template>
-  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+  <div class="grid grid-cols-2 gap-1.5 sm:gap-4 lg:grid-cols-4">
     <div class="block">
       <span
-        class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Corner box</span
       >
       <input
         :value="cornerSquareColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
+        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
         type="color"
         title="Choose corner square color"
         @change="emitCornerSquareColor"
@@ -15,12 +15,12 @@
     </div>
     <div class="block">
       <span
-        class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Corner dot</span
       >
       <input
         :value="cornerDotColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
+        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
         type="color"
         title="Choose corner dot color"
         @change="emitCornerDotColor"
@@ -40,7 +40,7 @@
     />
   </div>
 
-  <div class="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
+  <div class="mt-1.5 sm:mt-4 grid grid-cols-2 gap-1.5 sm:gap-4 lg:grid-cols-4">
     <FormSelect
       :model-value="dotsGradientType"
       :options="gradientOptions"
@@ -52,12 +52,12 @@
       :class="{ 'pointer-events-none opacity-40': dotsGradientType === 'none' }"
     >
       <span
-        class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Gradient from</span
       >
       <input
         :value="dotsGradientStartColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
+        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
         type="color"
         title="Choose gradient start color"
         :disabled="dotsGradientType === 'none'"
@@ -69,12 +69,12 @@
       :class="{ 'pointer-events-none opacity-40': dotsGradientType === 'none' }"
     >
       <span
-        class="select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
         >Gradient to</span
       >
       <input
         :value="dotsGradientEndColor"
-        class="color-input mt-2 h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
+        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
         type="color"
         title="Choose gradient end color"
         :disabled="dotsGradientType === 'none'"

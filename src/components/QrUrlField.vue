@@ -1,12 +1,12 @@
 <template>
   <span
-    class="block select-none text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
+    class="block select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
     >URL</span
   >
   <input
     id="qr-url"
     :value="url"
-    class="form-control mt-2 h-11 w-full rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-4 py-0 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
+    class="form-control mt-1.5 sm:mt-2 h-9 sm:h-11 w-full rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 sm:px-4 py-0 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
     type="url"
     inputmode="url"
     autocomplete="url"
