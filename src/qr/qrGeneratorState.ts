@@ -23,7 +23,7 @@ import {
   DEFAULT_SHAPE_TYPE,
 } from "./qrDefaults";
 import type { ExportSize, GradientMode, MarginLevel } from "./qrTypes";
-import type { SavedQrSessionRefs } from "./sessionStorage";
+import type { SavedQrSessionRefs } from "../storage/sessionStorage";
 import { formatPreviewUrl, isValidQrUrl } from "./url";
 import type { QrScanStatus } from "./scanQr";
 

@@ -7,7 +7,7 @@ import type {
 import { loadImageNaturalSize, readFileAsDataUrl } from "./logoImage";
 import type { ExportSize, GradientMode, MarginLevel } from "./qrTypes";
 import type { QrGeneratorState } from "./qrGeneratorState";
-import { clearQrSession } from "./sessionStorage";
+import { clearQrSession } from "../storage/sessionStorage";
 
 export function createQrGeneratorActions(
   state: QrGeneratorState,

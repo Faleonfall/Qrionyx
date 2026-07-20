@@ -132,6 +132,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import { useQrGenerator } from "../qr/useQrGenerator";
+import { loadTheme, saveTheme, type AppTheme } from "../storage/themeStorage";
 import { Sun, Moon } from "@lucide/vue";
 import QrForm from "./QrForm.vue";
 import QrPreview from "./QrPreview.vue";
@@ -143,26 +144,31 @@ export default defineComponent({
     const qrGenerator = useQrGenerator();
 
     // Theme Switcher State
-    const activeTheme = ref<"dark" | "light">("dark");
+    const activeTheme = ref<AppTheme>("dark");
+
+    const applyTheme = (theme: AppTheme): void => {
+      activeTheme.value = theme;
+      document.documentElement.setAttribute("data-theme", theme);
+    };
 
     const toggleTheme = (): void => {
       const newTheme = activeTheme.value === "dark" ? "light" : "dark";
-      activeTheme.value = newTheme;
-      document.documentElement.setAttribute("data-theme", newTheme);
+      applyTheme(newTheme);
+      saveTheme(newTheme);
     };
 
     onMounted(() => {
-      // Check system prefers-color-scheme
+      // Saved choice wins, else fall back to system prefers-color-scheme
+      const savedTheme = loadTheme();
+      if (savedTheme) {
+        applyTheme(savedTheme);
+        return;
+      }
+
       const systemPrefersLight = window.matchMedia(
         "(prefers-color-scheme: light)",
       ).matches;
-      if (systemPrefersLight) {
-        activeTheme.value = "light";
-        document.documentElement.setAttribute("data-theme", "light");
-      } else {
-        activeTheme.value = "dark";
-        document.documentElement.setAttribute("data-theme", "dark");
-      }
+      applyTheme(systemPrefersLight ? "light" : "dark");
     });
 
     return {

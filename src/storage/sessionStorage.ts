@@ -5,7 +5,7 @@ import type {
   ShapeType,
 } from "qr-code-styling";
 import type { Ref } from "vue";
-import type { ExportSize, GradientMode, MarginLevel } from "./qrTypes";
+import type { ExportSize, GradientMode, MarginLevel } from "../qr/qrTypes";
 
 const sessionStorageKey = "qrionyx.session";
 const sessionTtlMs = 15 * 60 * 1000;

@@ -9,7 +9,7 @@ import {
   readQrSessionRefs,
   saveQrSession,
   writeQrSessionRefs,
-} from "./sessionStorage";
+} from "../storage/sessionStorage";
 
 export function useQrGenerator() {
   const state = createQrGeneratorState();
