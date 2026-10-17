@@ -1,3 +1,6 @@
+export const minimumLogoPercent = 20;
+const logoPercentStep = 5;
+
 type LogoSizeLimitOptions = {
   moduleCount: number;
   naturalHeight: number;
@@ -8,8 +11,6 @@ type HiddenLogoSize = {
   height: number;
   width: number;
 };
-
-const minimumLogoPercent = 20;
 
 function calculateHiddenLogoSize({
   moduleCount,
@@ -69,7 +70,11 @@ export function getLogoSizeMaxPercent(options: LogoSizeLimitOptions) {
   let previousSize: HiddenLogoSize | null = null;
   let maxUsefulPercent = minimumLogoPercent;
 
-  for (let percent = minimumLogoPercent; percent <= 100; percent += 5) {
+  for (
+    let percent = minimumLogoPercent;
+    percent <= 100;
+    percent += logoPercentStep
+  ) {
     const currentSize = calculateHiddenLogoSize({ ...options, percent });
 
     if (previousSize && !isSameLogoSize(previousSize, currentSize)) {
@@ -80,4 +85,25 @@ export function getLogoSizeMaxPercent(options: LogoSizeLimitOptions) {
   }
 
   return maxUsefulPercent;
+}
+
+export function clampLogoSizePercent(value: number, maxPercent: number) {
+  const steppedValue = Math.round(value / logoPercentStep) * logoPercentStep;
+
+  return Math.min(Math.max(steppedValue, minimumLogoPercent), maxPercent);
+}
+
+export function getPointerLogoSizePercent(
+  clientX: number,
+  track: Pick<DOMRect, "left" | "width">,
+) {
+  return ((clientX - track.left) / track.width) * 100;
+}
+
+export function getLogoSizeKeyStep(key: string) {
+  if (key === "ArrowRight" || key === "ArrowUp") {
+    return logoPercentStep;
+  }
+
+  return key === "ArrowLeft" || key === "ArrowDown" ? -logoPercentStep : 0;
 }

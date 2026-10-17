@@ -1,9 +1,9 @@
 import QRCodeStyling from "qr-code-styling";
-import { nextTick } from "vue";
-import { createQrOptions } from "./createQrOptions";
-import { getRenderedLogoSize } from "./renderedLogoSize";
-import { scanQrPreview, type QrScanStatus } from "./scanQr";
-import type { QrGeneratorState } from "./qrGeneratorState";
+import { nextTick, onBeforeUnmount, useTemplateRef } from "vue";
+import { createQrOptions } from "../lib/createQrOptions";
+import { getRenderedLogoSize } from "../lib/renderedLogoSize";
+import { scanQrPreview, type QrScanStatus } from "../lib/scanQr";
+import type { QrState } from "./useQrState";
 
 type QrWithModuleCount = QRCodeStyling & {
   _qr?: {
@@ -11,7 +11,12 @@ type QrWithModuleCount = QRCodeStyling & {
   };
 };
 
-export function createQrPreviewRenderer(state: QrGeneratorState) {
+type QrPreviewRef = {
+  container: HTMLElement | null;
+};
+
+export function useQrPreview(state: QrState) {
+  const qrPreview = useTemplateRef<QrPreviewRef>("qrPreview");
   let qr: QRCodeStyling | null = null;
   let previewResizeObserver: ResizeObserver | null = null;
   let previewMutationObserver: MutationObserver | null = null;
@@ -19,7 +24,7 @@ export function createQrPreviewRenderer(state: QrGeneratorState) {
   let scanRequestId = 0;
 
   function getQrContainer() {
-    return state.qrPreview.value?.container || null;
+    return qrPreview.value?.container || null;
   }
 
   function clearScanStatus(status: QrScanStatus = "idle") {
@@ -100,6 +105,9 @@ export function createQrPreviewRenderer(state: QrGeneratorState) {
     state.qrModuleCount.value = qrWithModuleCount?._qr?.getModuleCount() || 0;
     if (state.imageSize.value > maxSize) {
       state.imageSize.value = maxSize;
+      // Redraw so the preview and the scan check use the clamped size
+      updateQr();
+      return;
     }
     state.renderedLogoSize.value = getRenderedLogoSize(getQrContainer());
     scheduleScanCheck();
@@ -124,14 +132,13 @@ export function createQrPreviewRenderer(state: QrGeneratorState) {
     updateQr();
   }
 
-  function cleanupPreviewRenderer() {
+  onBeforeUnmount(() => {
     clearScanStatus();
     previewResizeObserver?.disconnect();
     previewMutationObserver?.disconnect();
-  }
+  });
 
   return {
-    cleanupPreviewRenderer,
     mountPreviewRenderer,
     updateQr,
   };

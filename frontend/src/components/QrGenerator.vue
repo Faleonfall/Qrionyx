@@ -1,11 +1,11 @@
 <template>
   <section
-    class="app-shell mx-auto flex min-h-svh w-full max-w-304 flex-col justify-start lg:justify-center px-4 sm:px-7"
+    class="app-shell mx-auto flex min-h-svh w-full max-w-304 flex-col px-4 sm:px-7"
   >
     <header class="flex w-full items-center justify-between gap-4">
       <div>
         <p
-          class="select-none text-xs uppercase tracking-[0.32em] text-(--color-neon-cyan)"
+          class="select-none text-xs uppercase tracking-[0.32em] text-neon-cyan"
         >
           qrionyx
         </p>
@@ -16,8 +16,9 @@
         </h1>
       </div>
       <button
-        class="theme-toggle-btn flex items-center justify-center"
+        class="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-2xl border border-line bg-transparent text-ink-muted transition-all duration-300 hover:border-neon-cyan hover:bg-panel hover:text-neon-cyan"
         :title="toggleLabel"
+        :aria-label="toggleLabel"
         @click="toggleTheme"
       >
         <Moon v-if="activeTheme === 'dark'" :size="18" />
@@ -25,8 +26,9 @@
       </button>
     </header>
 
+    <!-- Auto margins center the cards between header and footer on desktop -->
     <div
-      class="mx-auto grid w-full max-w-2xl lg:max-w-none lg:grid-cols-[minmax(0,840px)_350px] lg:gap-x-5"
+      class="mx-auto grid w-full max-w-2xl lg:my-auto lg:max-w-none lg:grid-cols-[minmax(0,840px)_350px] lg:gap-x-5"
     >
       <!-- One card behind the URL field and the controls on desktop -->
       <div
@@ -51,7 +53,7 @@
           :has-qr="hasQr"
           :preview-url="previewUrl"
           :scan-status="scanStatus"
-          :title="qrUrl || 'Waiting for a URL...'"
+          :title="previewTitle"
         />
       </div>
 
@@ -73,6 +75,7 @@
         :error-correction-level="errorCorrectionLevel"
         :export-size="exportSize"
         :filename="filename"
+        :has-dots-gradient="hasDotsGradient"
         :has-logo="hasLogo"
         :hide-background-dots="hideBackgroundDots"
         :image-margin="imageMargin"
@@ -109,20 +112,24 @@
       />
     </div>
 
-    <!-- Inline Footer container -->
-    <footer class="app-footer-container select-none">
-      <div class="app-footer-inline">
+    <!-- Top padding follows the shell padding so the text sits centered -->
+    <footer
+      class="flex w-full select-none max-lg:mt-auto flex-col items-center justify-center border-t border-line pt-(--shell-pad-y)"
+    >
+      <div
+        class="flex flex-wrap items-center justify-center gap-2 text-center text-[13px] text-ink-muted opacity-80 transition-colors duration-300"
+      >
         <span>&copy; 2026 Qrionyx</span>
-        <span class="footer-divider">•</span>
+        <span class="opacity-50">•</span>
         <a
           href="https://github.com/Faleonfall/Qrionyx"
           target="_blank"
           rel="noopener noreferrer"
-          class="footer-link"
+          class="border-b border-dotted border-transparent font-medium text-ink-muted transition-all duration-200 hover:border-neon-cyan hover:text-neon-cyan"
         >
           GitHub
         </a>
-        <span class="footer-divider">•</span>
+        <span class="opacity-50">•</span>
         <span>Processed completely in-browser on your local machine.</span>
       </div>
     </footer>
@@ -132,7 +139,7 @@
 <script setup lang="ts">
 import { Moon, Sun } from "@lucide/vue";
 import { useTheme } from "../composables/useTheme";
-import { useQrGenerator } from "../qr/useQrGenerator";
+import { useQrGenerator } from "../composables/useQrGenerator";
 import QrForm from "./QrForm.vue";
 import QrPreview from "./QrPreview.vue";
 import QrUrlField from "./QrUrlField.vue";
@@ -158,6 +165,7 @@ const {
   errorCorrectionLevel,
   exportSize,
   filename,
+  hasDotsGradient,
   hasLogo,
   hasQr,
   hideBackgroundDots,
@@ -165,6 +173,7 @@ const {
   imageSize,
   imageSizeMaxPercent,
   marginLevel,
+  previewTitle,
   previewUrl,
   qrColor,
   qrUrl,

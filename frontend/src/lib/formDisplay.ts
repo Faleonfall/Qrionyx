@@ -1,12 +1,20 @@
-import type { FormSection } from "../qr/qrTypes";
+import type { FormSection } from "./qrTypes";
 
 export function getSectionClass(
   activeSection: FormSection,
   section: FormSection,
 ) {
   return activeSection === section
-    ? "text-(--color-cyber-background) font-bold"
-    : "text-(--color-text-muted) hover:text-(--color-neon-cyan)";
+    ? "text-page font-bold"
+    : "text-ink-muted hover:text-neon-cyan";
+}
+
+export function getSectionPillClass(activeSection: FormSection) {
+  return activeSection === "basic" ? "translate-x-0" : "translate-x-full";
+}
+
+export function getLogoDotsLabel(hideBackgroundDots: boolean) {
+  return hideBackgroundDots ? "Hide" : "Show";
 }
 
 export function getSectionPanelClass(

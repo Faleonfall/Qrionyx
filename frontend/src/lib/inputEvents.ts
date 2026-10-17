@@ -14,6 +14,11 @@ export function readInputChecked(event: Event) {
   return getInputTarget(event).checked === true;
 }
 
+// Empties the input after reading, so picking the same file again still fires
 export function readInputFile(event: Event) {
-  return getInputTarget(event).files?.[0] ?? null;
+  const target = getInputTarget(event);
+  const file = target.files?.[0] ?? null;
+
+  target.value = "";
+  return file;
 }

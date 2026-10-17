@@ -1,9 +1,9 @@
 import QRCodeStyling from "qr-code-styling";
-import { createQrOptions } from "./createQrOptions";
-import { DEFAULT_FILENAME } from "./qrDefaults";
-import type { QrGeneratorState } from "./qrGeneratorState";
+import { createQrOptions } from "../lib/createQrOptions";
+import { getDownloadName } from "../lib/qrDownload";
+import type { QrState } from "./useQrState";
 
-export function createQrExport(state: QrGeneratorState) {
+export function useQrExport(state: QrState) {
   function createDownloadQr() {
     if (!state.canDownload.value) {
       throw new Error("Enter a valid URL before downloading.");
@@ -18,17 +18,10 @@ export function createQrExport(state: QrGeneratorState) {
     );
   }
 
-  function getDownloadName() {
-    return (
-      state.filename.value.trim().replace(/\.(png|webp|svg|jpe?g)$/i, "") ||
-      DEFAULT_FILENAME
-    );
-  }
-
   async function downloadQr(extension: "png" | "svg" | "webp") {
     try {
       await createDownloadQr().download({
-        name: getDownloadName(),
+        name: getDownloadName(state.filename.value),
         extension,
       });
     } catch (error) {

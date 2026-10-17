@@ -1,29 +1,24 @@
-import { onBeforeUnmount, onMounted, useTemplateRef } from "vue";
-import { loadImageNaturalSize } from "./logoImage";
-import { createQrExport } from "./qrExport";
-import { createQrGeneratorActions } from "./qrGeneratorActions";
-import { createQrGeneratorState, type QrPreviewRef } from "./qrGeneratorState";
-import { createQrPreviewRenderer } from "./qrPreviewRenderer";
+import { onBeforeUnmount, onMounted } from "vue";
+import { loadImageNaturalSize } from "../lib/logoImage";
 import {
   loadQrSession,
   readQrSessionRefs,
   saveQrSession,
   writeQrSessionRefs,
 } from "../lib/qrSession";
+import { useQrActions } from "./useQrActions";
+import { useQrExport } from "./useQrExport";
+import { useQrPreview } from "./useQrPreview";
+import { useQrState } from "./useQrState";
 
 export function useQrGenerator() {
-  const state = createQrGeneratorState(
-    useTemplateRef<QrPreviewRef>("qrPreview"),
-  );
-  const renderer = createQrPreviewRenderer(state);
-  const actions = createQrGeneratorActions(state, renderer.updateQr);
-  const qrExport = createQrExport(state);
-  let shouldSaveSession = true;
+  const state = useQrState();
+  const preview = useQrPreview(state);
+  const actions = useQrActions(state, preview.updateQr);
+  const qrExport = useQrExport(state);
 
   function saveCurrentSession() {
-    if (shouldSaveSession) {
-      saveQrSession(readQrSessionRefs(state.sessionRefs));
-    }
+    saveQrSession(readQrSessionRefs(state.sessionRefs));
   }
 
   async function restoreSavedSession() {
@@ -37,25 +32,15 @@ export function useQrGenerator() {
     );
   }
 
-  function resetQr() {
-    shouldSaveSession = false;
-    actions.resetQr();
-    globalThis.setTimeout(() => {
-      shouldSaveSession = true;
-    }, 0);
-  }
-
   onMounted(async () => {
     await restoreSavedSession();
-    await renderer.mountPreviewRenderer();
+    await preview.mountPreviewRenderer();
     globalThis.addEventListener("pagehide", saveCurrentSession);
   });
 
   onBeforeUnmount(() => {
     saveCurrentSession();
     globalThis.removeEventListener("pagehide", saveCurrentSession);
-    renderer.cleanupPreviewRenderer();
-    actions.cleanupActions();
   });
 
   return {
@@ -64,8 +49,8 @@ export function useQrGenerator() {
     backgroundRound: state.backgroundRound,
     backgroundTransparent: state.backgroundTransparent,
     canDownload: state.canDownload,
-    cornerDotColor: state.cornerDotColor,
-    cornerSquareColor: state.cornerSquareColor,
+    cornerDotColor: state.shownCornerDotColor,
+    cornerSquareColor: state.shownCornerSquareColor,
     cornerType: state.cornerType,
     dotType: state.dotType,
     dotsGradientEndColor: state.dotsGradientEndColor,
@@ -77,6 +62,7 @@ export function useQrGenerator() {
     errorCorrectionLevel: state.errorCorrectionLevel,
     exportSize: state.exportSize,
     filename: state.filename,
+    hasDotsGradient: state.hasDotsGradient,
     hasLogo: state.hasLogo,
     hasQr: state.hasQr,
     hideBackgroundDots: state.hideBackgroundDots,
@@ -84,11 +70,12 @@ export function useQrGenerator() {
     imageSize: state.imageSize,
     imageSizeMaxPercent: state.imageSizeMaxPercent,
     marginLevel: state.marginLevel,
+    previewTitle: state.previewTitle,
     previewUrl: state.previewUrl,
     qrColor: state.qrColor,
     qrUrl: state.qrUrl,
     renderedLogoSize: state.renderedLogoSize,
-    resetQr,
+    resetQr: actions.resetQr,
     scanStatus: state.scanStatus,
     shapeType: state.shapeType,
     updateBackgroundColor: actions.updateBackgroundColor,

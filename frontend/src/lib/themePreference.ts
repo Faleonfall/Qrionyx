@@ -1,6 +1,6 @@
-export type AppTheme = "dark" | "light";
-
 const themeStorageKey = "qrionyx.theme";
+
+export type AppTheme = "dark" | "light";
 
 function isAppTheme(value: string | null): value is AppTheme {
   return value === "dark" || value === "light";

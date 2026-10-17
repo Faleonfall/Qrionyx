@@ -1,45 +1,21 @@
 <template>
-  <span
-    class="block select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-    >URL</span
-  >
+  <span class="field-label block">URL</span>
   <input
     id="qr-url"
     :value="url"
-    class="form-control mt-1.5 sm:mt-2 h-9 sm:h-11 w-full rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) px-3 sm:px-4 py-0 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
+    class="form-control mt-1.5 sm:mt-2 h-9 sm:h-11 w-full rounded-xl border border-line bg-page px-3 sm:px-4 py-0 text-ink outline-none transition focus:border-neon-cyan"
     type="url"
     inputmode="url"
     autocomplete="url"
     placeholder="https://example.com"
-    @input="emitUrl"
+    @input="emit('update:url', readInputValue($event))"
   />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { readInputValue } from "../lib/inputEvents";
 
-export default defineComponent({
-  name: "QrUrlField",
-  props: {
-    url: {
-      type: String,
-      required: true,
-    },
-  },
-  emits: {
-    "update:url": (value: string) => typeof value === "string",
-  },
-  setup(_, { emit }) {
-    function emitUrl(event: Event) {
-      emit(
-        "update:url",
-        event.target instanceof HTMLInputElement
-          ? event.target.value.trim()
-          : "",
-      );
-    }
+defineProps<{ url: string }>();
 
-    return { emitUrl };
-  },
-});
+const emit = defineEmits<{ "update:url": [value: string] }>();
 </script>

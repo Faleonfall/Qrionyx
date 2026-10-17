@@ -1,10 +1,12 @@
+export const PREVIEW_URL_PLACEHOLDER = "Waiting for a URL...";
+
 export function isValidQrUrl(value: string) {
   return parseQrUrl(value) !== null;
 }
 
 export function formatPreviewUrl(url: string) {
   return (
-    url.replace(/^https?:\/\/(www\.)?|^www\./i, "") || "Waiting for a URL..."
+    url.replace(/^https?:\/\/(www\.)?|^www\./i, "") || PREVIEW_URL_PLACEHOLDER
   );
 }
 

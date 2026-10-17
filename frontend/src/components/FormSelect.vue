@@ -1,15 +1,12 @@
 <template>
-  <div class="block" :class="{ 'pointer-events-none opacity-40': disabled }">
-    <span
-      class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-      >{{ label }}</span
-    >
+  <div :class="{ 'pointer-events-none opacity-40': disabled }">
+    <span class="field-label">{{ label }}</span>
     <span class="relative mt-1 sm:mt-2 block">
       <select
         :disabled="disabled"
         :value="modelValue"
-        class="form-control h-9 sm:h-11 w-full min-w-0 cursor-pointer appearance-none rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) py-0 pr-6 pl-2 sm:pr-8 sm:pl-3 text-(--color-text-primary) outline-none transition focus:border-(--color-neon-cyan)"
-        @change="emitValue"
+        class="form-control h-9 sm:h-11 w-full min-w-0 cursor-pointer appearance-none rounded-xl border border-line bg-page py-0 pr-6 pl-2 sm:pr-8 sm:pl-3 text-ink outline-none transition focus:border-neon-cyan"
+        @change="emit('update:modelValue', readInputValue($event))"
       >
         <slot>
           <option
@@ -22,7 +19,7 @@
         </slot>
       </select>
       <span
-        class="pointer-events-none absolute top-1/2 right-2 sm:right-3 -translate-y-1/2 select-none text-[8px] sm:text-[10px] text-(--color-text-muted)"
+        class="pointer-events-none absolute top-1/2 right-2 sm:right-3 -translate-y-1/2 select-none text-[8px] sm:text-[10px] text-ink-muted"
         aria-hidden="true"
         >▼</span
       >
@@ -30,41 +27,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, type PropType } from "vue";
-import type { SelectOption } from "../qr/qrTypes";
+<script setup lang="ts">
+import { readInputValue } from "../lib/inputEvents";
+import type { SelectOption } from "../lib/qrTypes";
 
-export default defineComponent({
-  name: "FormSelect",
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    options: {
-      type: Array as PropType<SelectOption[]>,
-      required: true,
-    },
-  },
-  emits: {
-    "update:modelValue": (value: string) => value.length > 0,
-  },
-  setup(_, { emit }) {
-    function emitValue(event: Event) {
-      if (event.target instanceof HTMLSelectElement) {
-        emit("update:modelValue", event.target.value);
-      }
-    }
+withDefaults(
+  defineProps<{
+    disabled?: boolean;
+    label: string;
+    modelValue: string;
+    options: SelectOption[];
+  }>(),
+  { disabled: false },
+);
 
-    return { emitValue };
-  },
-});
+const emit = defineEmits<{ "update:modelValue": [value: string] }>();
 </script>

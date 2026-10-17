@@ -1,208 +1,78 @@
 @import "tailwindcss";
+@import "./styles/shell.css";
 @import "./styles/controls.css";
 @import "./styles/generator.css";
 
-@utility panel-card {
-  @apply rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 shadow-2xl shadow-black/30;
-}
-
-:root {
-  --color-cyber-background: #071018;
+/* Dark theme values, the light set below overrides them */
+@theme {
+  --color-page: #071018;
   --color-panel: #101827;
-  --color-panel-border: #3f5f8f;
+  --color-line: #3f5f8f;
   --color-neon-cyan: #8be9ff;
   --color-neon-pink: #a78bfa;
-  --color-status-success: #34d399;
-  --color-text-primary: #ffffff;
-  --color-text-muted: #c8d7ee;
+  --color-success: #34d399;
+  --color-ink: #ffffff;
+  --color-ink-muted: #c8d7ee;
+
+  /* Same in both themes */
+  --color-on-accent: #ffffff;
+  --color-shade: #000000;
+  --color-slider: #3b82f6;
+  --color-preview-ink: #64748b;
+  --color-checker-light: #ffffff;
+  --color-checker-dark: #d6dfef;
+
   --font-cyber: "Orbitron", sans-serif;
 }
 
-/* Default system themes */
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-cyber-background: #f1f5f9;
-    --color-panel: #ffffff;
-    --color-panel-border: #cbd5e1;
-    --color-neon-cyan: #0284c7;
-    --color-neon-pink: #7c3aed;
-    --color-status-success: #059669;
-    --color-text-primary: #0f172a;
-    --color-text-muted: #64748b;
-  }
-}
-
-/* Explicit theme overrides */
-:root[data-theme="dark"] {
-  --color-cyber-background: #071018;
-  --color-panel: #101827;
-  --color-panel-border: #3f5f8f;
-  --color-neon-cyan: #8be9ff;
-  --color-neon-pink: #a78bfa;
-  --color-status-success: #34d399;
-  --color-text-primary: #ffffff;
-  --color-text-muted: #c8d7ee;
-}
-
+/* data-theme is always set, from the saved choice or the system preference */
 :root[data-theme="light"] {
-  --color-cyber-background: #f1f5f9;
+  --color-page: #f1f5f9;
   --color-panel: #ffffff;
-  --color-panel-border: #cbd5e1;
+  --color-line: #cbd5e1;
   --color-neon-cyan: #0284c7;
   --color-neon-pink: #7c3aed;
-  --color-status-success: #059669;
-  --color-text-primary: #0f172a;
-  --color-text-muted: #64748b;
+  --color-success: #059669;
+  --color-ink: #0f172a;
+  --color-ink-muted: #64748b;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background-color: var(--color-cyber-background);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: var(--color-page);
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
 
-body {
-  font-family: var(--font-cyber);
-}
+  body {
+    font-family: var(--font-cyber);
+  }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-neon-cyan);
-  outline-offset: 2px;
-}
-
-.form-control:focus-visible,
-button:focus-visible:not(:disabled),
-input[type="color"]:focus-visible,
-.form-control:has(:focus-visible) {
-  outline: none;
-  border-color: var(--color-neon-cyan);
-}
-
-:focus-visible:disabled,
-[aria-disabled="true"]:focus-visible {
-  outline: none;
-}
-
-.form-control {
-  font-family: var(--font-cyber);
-  font-size: 12px;
-}
-
-@media (min-width: 640px) {
-  .form-control {
-    font-size: 15px;
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
   }
 }
 
-select.form-control:hover:not(:disabled),
-input.form-control:hover:not(:disabled),
-div.form-control:hover,
-input[type="color"]:hover:not(:disabled) {
-  border-color: var(--color-neon-cyan);
+@utility field-label {
+  @apply select-none text-[10px] uppercase tracking-[0.18em] text-ink-muted sm:text-xs;
 }
 
-select.form-control:hover:not(:disabled) {
-  color: var(--color-neon-cyan);
+@utility panel-card {
+  @apply rounded-2xl border border-line bg-panel/80 shadow-2xl shadow-shade/30;
 }
 
-/* Theme Toggle Button */
-.theme-toggle-btn {
-  background: transparent;
-  border: 1px solid var(--color-panel-border);
-  color: var(--color-text-muted);
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-2xl);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+@utility color-field {
+  @apply h-9 cursor-pointer rounded-xl border border-line bg-page p-1 transition hover:border-neon-cyan disabled:cursor-not-allowed disabled:opacity-45 sm:h-11;
 }
 
-.theme-toggle-btn:hover {
-  border-color: var(--color-neon-cyan);
-  color: var(--color-neon-cyan);
-  background: var(--color-panel);
-}
-
-/* Page shell, its vertical padding also sets the footer's top padding so the
-   footer text sits centered between the divider and the bottom edge */
-.app-shell {
-  --shell-pad-y: 24px;
-  gap: 24px;
-  padding-block: var(--shell-pad-y);
-}
-
-@media (min-width: 640px) {
-  .app-shell {
-    --shell-pad-y: 32px;
-  }
-}
-
-/* Footer styling */
-.app-footer-container {
-  margin-top: auto;
-  padding-top: var(--shell-pad-y);
-  border-top: 1px solid var(--color-panel-border);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.app-footer-inline {
-  font-size: 13px;
-  color: var(--color-text-muted);
-  opacity: 0.8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  transition: color 0.3s ease;
-  text-align: center;
-}
-
-.footer-divider {
-  opacity: 0.5;
-}
-
-.footer-link {
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border-bottom: 1px dotted transparent;
-}
-
-.footer-link:hover {
-  color: var(--color-neon-cyan);
-  border-bottom-color: var(--color-neon-cyan);
-}
-
-/* Vertical Responsiveness (shorter screen heights) */
-@media (max-height: 850px) {
-  .app-shell {
-    --shell-pad-y: 16px;
-    gap: 16px;
-  }
-}
-
-@media (max-height: 720px) {
-  .app-shell {
-    --shell-pad-y: 12px;
-    gap: 12px;
-  }
+@utility export-btn {
+  @apply flex h-8 cursor-pointer select-none items-center rounded-md border px-1.5 text-[8px] font-bold uppercase tracking-[0.08em] transition disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent sm:h-11 sm:rounded-xl sm:px-5 sm:text-[11px] sm:tracking-[0.12em];
 }

@@ -1,17 +1,9 @@
 <template>
-  <main
-    class="min-h-svh bg-(--color-cyber-background) text-(--color-text-primary)"
-  >
+  <main class="min-h-svh bg-page text-ink">
     <QrGenerator />
   </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import QrGenerator from "./components/QrGenerator.vue";
-
-export default defineComponent({
-  name: "App",
-  components: { QrGenerator },
-});
 </script>

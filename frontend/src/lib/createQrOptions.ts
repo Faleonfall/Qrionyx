@@ -73,7 +73,8 @@ export function createQrOptions(
     height,
     margin: getMarginSize(settings.marginLevel, width),
     data: settings.data,
-    ...(settings.image ? { image: settings.image } : {}),
+    // Always set, update() merges options and would keep a cleared logo
+    image: settings.image,
     qrOptions: {
       errorCorrectionLevel: settings.errorCorrectionLevel,
       typeNumber: 0,

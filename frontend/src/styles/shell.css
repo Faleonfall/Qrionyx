@@ -1,0 +1,27 @@
+/* Page shell, its vertical padding also sets the footer's top padding so the
+   footer text sits centered between the divider and the bottom edge */
+.app-shell {
+  --shell-pad-y: 24px;
+  gap: 24px;
+  padding-block: var(--shell-pad-y);
+}
+
+@media (min-width: 640px) {
+  .app-shell {
+    --shell-pad-y: 32px;
+  }
+}
+
+@media (max-height: 850px) {
+  .app-shell {
+    --shell-pad-y: 16px;
+    gap: 16px;
+  }
+}
+
+@media (max-height: 720px) {
+  .app-shell {
+    --shell-pad-y: 12px;
+    gap: 12px;
+  }
+}

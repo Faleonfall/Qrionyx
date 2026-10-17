@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Qrionyx</title>
+    <meta name="theme-color" content="#071018" />
+    <!-- Applies the saved theme, else the system one, before first paint.
+         The key matches themeStorageKey in src/lib/themePreference.ts, and
+         the colors match --color-page, which useTheme reads once mounted -->
+    <script>
+      let theme = null;
+      try {
+        theme = localStorage.getItem("qrionyx.theme");
+      } catch {}
+      if (theme !== "dark" && theme !== "light") {
+        theme = matchMedia("(prefers-color-scheme: light)").matches
+          ? "light"
+          : "dark";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+      if (theme === "light") {
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute("content", "#f1f5f9");
+      }
+    </script>
     <meta
       name="description"
       content="Qrionyx generates styled QR codes right in your browser. Pick dot shapes, corners, colors and gradients, add a logo, check that it scans, and export PNG, WEBP or SVG. Nothing is uploaded."
@@ -12,7 +33,6 @@
     <link rel="canonical" href="https://faleonfall.github.io/Qrionyx/" />
     <meta name="application-name" content="Qrionyx" />
     <meta name="apple-mobile-web-app-title" content="Qrionyx" />
-    <meta name="theme-color" content="#071018" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Qrionyx" />

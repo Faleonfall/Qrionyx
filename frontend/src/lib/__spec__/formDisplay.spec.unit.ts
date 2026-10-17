@@ -1,5 +1,24 @@
 import { describe, expect, it } from "vitest";
-import { getSectionClass, getSectionPanelClass } from "../formDisplay";
+import {
+  getLogoDotsLabel,
+  getSectionClass,
+  getSectionPanelClass,
+  getSectionPillClass,
+} from "../formDisplay";
+
+describe("getSectionPillClass", () => {
+  it("slides the pill under the active section", () => {
+    expect(getSectionPillClass("basic")).toBe("translate-x-0");
+    expect(getSectionPillClass("advanced")).toBe("translate-x-full");
+  });
+});
+
+describe("getLogoDotsLabel", () => {
+  it("names the current setting", () => {
+    expect(getLogoDotsLabel(true)).toBe("Hide");
+    expect(getLogoDotsLabel(false)).toBe("Show");
+  });
+});
 
 describe("getSectionClass", () => {
   it("highlights only the active section", () => {

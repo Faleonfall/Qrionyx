@@ -38,6 +38,15 @@ function measureImage(source: string) {
   });
 }
 
+// Null for no logo or a file that is not an image
 export async function loadImageNaturalSize(source: string) {
-  return source ? await measureImage(source) : null;
+  if (!source) {
+    return null;
+  }
+
+  try {
+    return await measureImage(source);
+  } catch {
+    return null;
+  }
 }

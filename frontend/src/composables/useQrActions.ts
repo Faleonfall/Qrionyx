@@ -4,15 +4,13 @@ import type {
   ErrorCorrectionLevel,
   ShapeType,
 } from "qr-code-styling";
-import { loadImageNaturalSize, readFileAsDataUrl } from "./logoImage";
-import type { ExportSize, GradientMode, MarginLevel } from "./qrTypes";
-import type { QrGeneratorState } from "./qrGeneratorState";
+import { onBeforeUnmount } from "vue";
+import { loadImageNaturalSize, readFileAsDataUrl } from "../lib/logoImage";
+import type { ExportSize, GradientMode, MarginLevel } from "../lib/qrTypes";
 import { clearQrSession } from "../lib/qrSession";
+import type { QrState } from "./useQrState";
 
-export function createQrGeneratorActions(
-  state: QrGeneratorState,
-  updateQr: () => void,
-) {
+export function useQrActions(state: QrState, updateQr: () => void) {
   let imageSizeUpdateTimeout: ReturnType<typeof globalThis.setTimeout> | null =
     null;
 
@@ -36,9 +34,15 @@ export function createQrGeneratorActions(
       return;
     }
 
-    const imageSource = await readFileAsDataUrl(file);
+    const imageSource = await readFileAsDataUrl(file).catch(() => "");
+    const naturalSize = await loadImageNaturalSize(imageSource);
 
-    state.imageNaturalSize.value = await loadImageNaturalSize(imageSource);
+    // A file that is not an image leaves the current logo alone
+    if (!naturalSize) {
+      return;
+    }
+
+    state.imageNaturalSize.value = naturalSize;
     setAndUpdate(state.image, imageSource);
   }
 
@@ -48,14 +52,13 @@ export function createQrGeneratorActions(
     updateQr();
   }
 
-  function cleanupActions() {
+  onBeforeUnmount(() => {
     if (imageSizeUpdateTimeout) {
       globalThis.clearTimeout(imageSizeUpdateTimeout);
     }
-  }
+  });
 
   return {
-    cleanupActions,
     resetQr,
     updateBackgroundColor: (value: string) => {
       setAndUpdate(state.backgroundColor, value);

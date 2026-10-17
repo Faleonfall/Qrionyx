@@ -1,26 +1,20 @@
 <template>
   <div class="grid grid-cols-2 gap-1.5 sm:gap-4 lg:grid-cols-4">
-    <div class="block">
-      <span
-        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-        >Corner box</span
-      >
+    <div>
+      <span class="field-label">Corner box</span>
       <input
         :value="cornerSquareColor"
-        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
+        class="color-input color-field mt-1.5 sm:mt-2 w-full"
         type="color"
         title="Choose corner square color"
         @change="emit('update:cornerSquareColor', readInputValue($event))"
       />
     </div>
-    <div class="block">
-      <span
-        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-        >Corner dot</span
-      >
+    <div>
+      <span class="field-label">Corner dot</span>
       <input
         :value="cornerDotColor"
-        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan)"
+        class="color-input color-field mt-1.5 sm:mt-2 w-full"
         type="color"
         title="Choose corner dot color"
         @change="emit('update:cornerDotColor', readInputValue($event))"
@@ -49,37 +43,25 @@
         emit('update:dotsGradientType', $event as GradientMode)
       "
     />
-    <div
-      class="block"
-      :class="{ 'pointer-events-none opacity-40': dotsGradientType === 'none' }"
-    >
-      <span
-        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-        >From</span
-      >
+    <div :class="{ 'pointer-events-none opacity-40': !hasDotsGradient }">
+      <span class="field-label">From</span>
       <input
         :value="dotsGradientStartColor"
-        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
+        class="color-input color-field mt-1.5 sm:mt-2 w-full"
         type="color"
         title="Choose gradient start color"
-        :disabled="dotsGradientType === 'none'"
+        :disabled="!hasDotsGradient"
         @change="emit('update:dotsGradientStartColor', readInputValue($event))"
       />
     </div>
-    <div
-      class="block"
-      :class="{ 'pointer-events-none opacity-40': dotsGradientType === 'none' }"
-    >
-      <span
-        class="select-none text-[10px] sm:text-xs uppercase tracking-[0.18em] text-(--color-text-muted)"
-        >To</span
-      >
+    <div :class="{ 'pointer-events-none opacity-40': !hasDotsGradient }">
+      <span class="field-label">To</span>
       <input
         :value="dotsGradientEndColor"
-        class="color-input mt-1.5 sm:mt-2 h-9 sm:h-11 w-full cursor-pointer rounded-xl border border-(--color-panel-border) bg-(--color-cyber-background) p-1 transition hover:border-(--color-neon-cyan) disabled:cursor-not-allowed disabled:opacity-45"
+        class="color-input color-field mt-1.5 sm:mt-2 w-full"
         type="color"
         title="Choose gradient end color"
-        :disabled="dotsGradientType === 'none'"
+        :disabled="!hasDotsGradient"
         @change="emit('update:dotsGradientEndColor', readInputValue($event))"
       />
     </div>
@@ -93,8 +75,8 @@ import {
   backgroundRoundOptions,
   gradientOptions,
   shapeOptions,
-} from "../qr/qrSelectOptions";
-import type { GradientMode } from "../qr/qrTypes";
+} from "../lib/qrSelectOptions";
+import type { GradientMode } from "../lib/qrTypes";
 import FormSelect from "./FormSelect.vue";
 
 defineProps<{
@@ -104,6 +86,7 @@ defineProps<{
   dotsGradientEndColor: string;
   dotsGradientStartColor: string;
   dotsGradientType: GradientMode;
+  hasDotsGradient: boolean;
   shapeType: ShapeType;
 }>();
 

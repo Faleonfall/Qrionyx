@@ -7,7 +7,6 @@ import tailwindcss from "@tailwindcss/vite";
 // ui for one component or hook rendered on its own, int for anything that
 // checks real storage or goes deeper than what the ui shows.
 export default defineConfig({
-  base: "./",
   plugins: [vue(), tailwindcss()],
   server: {
     port: 3000,

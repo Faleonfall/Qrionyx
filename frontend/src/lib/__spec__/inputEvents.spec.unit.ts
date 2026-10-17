@@ -37,6 +37,14 @@ describe("readInputFile", () => {
     expect(readInputFile(fakeEvent({ files: [file] }))).toBe(file);
   });
 
+  it("empties the input so the same file can be picked again", () => {
+    const target = { files: [{ name: "logo.png" }], value: "C:\\logo.png" };
+
+    readInputFile(fakeEvent(target));
+
+    expect(target.value).toBe("");
+  });
+
   it("returns null without files", () => {
     expect(readInputFile(fakeEvent({ files: [] }))).toBeNull();
     expect(readInputFile(fakeEvent({ files: null }))).toBeNull();

@@ -8,7 +8,6 @@ import type { ExportSize, MarginLevel } from "./qrTypes";
 
 export const DEFAULT_QR_COLOR = "#3B1E8F";
 export const DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
-export const PREVIEW_DISPLAY_SIZE = 300;
 export const PREVIEW_SIZE = 600;
 export const DEFAULT_EXPORT_SIZE: ExportSize = 1024;
 export const DEFAULT_FILENAME = "qr";

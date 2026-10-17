@@ -83,8 +83,8 @@ describe("createQrOptions", () => {
     });
   });
 
-  it("adds the image only when a logo is set", () => {
-    expect(createQrOptions(settings())).not.toHaveProperty("image");
+  it("always sets the image so a cleared logo overrides the old one", () => {
+    expect(createQrOptions(settings()).image).toBe("");
     expect(
       createQrOptions(settings({ image: "data:image/png;base64,AA" })).image,
     ).toBe("data:image/png;base64,AA");

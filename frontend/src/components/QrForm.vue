@@ -47,11 +47,12 @@
           <QrAdvancedControls
             :key="advancedResetKey"
             :background-round="backgroundRound"
-            :corner-dot-color="cornerDotColor || qrColor"
-            :corner-square-color="cornerSquareColor || qrColor"
+            :corner-dot-color="cornerDotColor"
+            :corner-square-color="cornerSquareColor"
             :dots-gradient-end-color="dotsGradientEndColor"
             :dots-gradient-start-color="dotsGradientStartColor"
             :dots-gradient-type="dotsGradientType"
+            :has-dots-gradient="hasDotsGradient"
             :has-logo="hasLogo"
             :hide-background-dots="hideBackgroundDots"
             :image-margin="imageMargin"
@@ -107,7 +108,7 @@ import type {
   FormSection,
   GradientMode,
   MarginLevel,
-} from "../qr/qrTypes";
+} from "../lib/qrTypes";
 import QrAdvancedControls from "./QrAdvancedControls.vue";
 import QrBasicControls from "./QrBasicControls.vue";
 import QrExportActions from "./QrExportActions.vue";
@@ -130,6 +131,7 @@ defineProps<{
   errorCorrectionLevel: ErrorCorrectionLevel;
   exportSize: ExportSize;
   filename: string;
+  hasDotsGradient: boolean;
   hasLogo: boolean;
   hideBackgroundDots: boolean;
   imageMargin: number;

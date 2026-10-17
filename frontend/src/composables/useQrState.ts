@@ -4,9 +4,9 @@ import type {
   ErrorCorrectionLevel,
   ShapeType,
 } from "qr-code-styling";
-import { computed, ref, type ShallowRef } from "vue";
-import { getLogoSizeMaxPercent } from "./logoSizeLimit";
-import type { ImageNaturalSize } from "./logoImage";
+import { computed, ref } from "vue";
+import { getLogoSizeMaxPercent } from "../lib/logoSizeLimit";
+import type { ImageNaturalSize } from "../lib/logoImage";
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_BACKGROUND_ROUND,
@@ -21,19 +21,19 @@ import {
   DEFAULT_MARGIN_LEVEL,
   DEFAULT_QR_COLOR,
   DEFAULT_SHAPE_TYPE,
-} from "./qrDefaults";
-import type { ExportSize, GradientMode, MarginLevel } from "./qrTypes";
+} from "../lib/qrDefaults";
+import type { ExportSize, GradientMode, MarginLevel } from "../lib/qrTypes";
 import type { SavedQrSessionRefs } from "../lib/qrSession";
-import { formatPreviewUrl, isValidQrUrl } from "./url";
-import type { QrScanStatus } from "./scanQr";
+import {
+  formatPreviewUrl,
+  isValidQrUrl,
+  PREVIEW_URL_PLACEHOLDER,
+} from "../lib/qrUrl";
+import type { QrScanStatus } from "../lib/scanQr";
 
-export type QrPreviewRef = {
-  container: HTMLElement | null;
-};
+export type QrState = ReturnType<typeof useQrState>;
 
-export function createQrGeneratorState(
-  qrPreview: Readonly<ShallowRef<QrPreviewRef | null>>,
-) {
+export function useQrState() {
   const qrUrl = ref("");
   const qrColor = ref(DEFAULT_QR_COLOR);
   const backgroundColor = ref(DEFAULT_BACKGROUND_COLOR);
@@ -66,6 +66,15 @@ export function createQrGeneratorState(
   const hasLogo = computed(() => image.value.length > 0);
   const canDownload = computed(() => isValidQrUrl(qrUrl.value));
   const previewUrl = computed(() => formatPreviewUrl(qrUrl.value));
+  const previewTitle = computed(() => qrUrl.value || PREVIEW_URL_PLACEHOLDER);
+  const hasDotsGradient = computed(() => dotsGradientType.value !== "none");
+  // An empty corner color follows the QR color
+  const shownCornerDotColor = computed(
+    () => cornerDotColor.value || qrColor.value,
+  );
+  const shownCornerSquareColor = computed(
+    () => cornerSquareColor.value || qrColor.value,
+  );
   const imageSizeMaxPercent = computed(() => {
     if (!image.value || !imageNaturalSize.value || qrModuleCount.value <= 0) {
       return 100;
@@ -77,6 +86,29 @@ export function createQrGeneratorState(
       naturalWidth: imageNaturalSize.value.width,
     });
   });
+  const sessionRefs: SavedQrSessionRefs = {
+    backgroundColor,
+    backgroundRound,
+    backgroundTransparent,
+    cornerDotColor,
+    cornerSquareColor,
+    cornerType,
+    dotType,
+    dotsGradientEndColor,
+    dotsGradientStartColor,
+    dotsGradientType,
+    errorCorrectionLevel,
+    exportSize,
+    filename,
+    hideBackgroundDots,
+    image,
+    imageMargin,
+    imageSize,
+    marginLevel,
+    qrColor,
+    qrUrl,
+    shapeType,
+  };
 
   function getSettings() {
     return {
@@ -128,30 +160,6 @@ export function createQrGeneratorState(
     dotsGradientEndColor.value = DEFAULT_DOTS_GRADIENT_END_COLOR;
   }
 
-  const sessionRefs: SavedQrSessionRefs = {
-    backgroundColor,
-    backgroundRound,
-    backgroundTransparent,
-    cornerDotColor,
-    cornerSquareColor,
-    cornerType,
-    dotType,
-    dotsGradientEndColor,
-    dotsGradientStartColor,
-    dotsGradientType,
-    errorCorrectionLevel,
-    exportSize,
-    filename,
-    hideBackgroundDots,
-    image,
-    imageMargin,
-    imageSize,
-    marginLevel,
-    qrColor,
-    qrUrl,
-    shapeType,
-  };
-
   return {
     advancedResetKey,
     backgroundColor,
@@ -169,6 +177,7 @@ export function createQrGeneratorState(
     exportSize,
     filename,
     getSettings,
+    hasDotsGradient,
     hasLogo,
     hasQr,
     hideBackgroundDots,
@@ -178,17 +187,17 @@ export function createQrGeneratorState(
     imageSize,
     imageSizeMaxPercent,
     marginLevel,
+    previewTitle,
     previewUrl,
     qrColor,
     qrModuleCount,
-    qrPreview,
     qrUrl,
     renderedLogoSize,
     resetState,
     scanStatus,
     sessionRefs,
     shapeType,
+    shownCornerDotColor,
+    shownCornerSquareColor,
   };
 }
-
-export type QrGeneratorState = ReturnType<typeof createQrGeneratorState>;

@@ -1,4 +1,4 @@
-function getLogoSizeLabel(width: number, height: number) {
+export function getLogoSizeLabel(width: number, height: number) {
   const roundedWidth = Math.round(width);
   const roundedHeight = Math.round(height);
 
@@ -15,7 +15,7 @@ export function getRenderedLogoSize(container: HTMLElement | null) {
   const svg = container?.querySelector("svg");
   const logo = svg?.querySelector("image");
 
-  if (!(svg instanceof SVGSVGElement) || !(logo instanceof SVGImageElement)) {
+  if (!(svg instanceof SVGSVGElement) || !(logo instanceof Element)) {
     return "";
   }
 

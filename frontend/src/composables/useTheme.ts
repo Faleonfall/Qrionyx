@@ -25,9 +25,7 @@ export function useTheme() {
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
         "content",
-        getComputedStyle(root)
-          .getPropertyValue("--color-cyber-background")
-          .trim(),
+        getComputedStyle(root).getPropertyValue("--color-page").trim(),
       );
   }
 

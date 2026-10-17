@@ -1,3 +1,43 @@
+:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 2px;
+}
+
+.form-control:focus-visible,
+button:focus-visible:not(:disabled),
+input[type="color"]:focus-visible,
+.form-control:has(:focus-visible) {
+  outline: none;
+  border-color: var(--color-neon-cyan);
+}
+
+:focus-visible:disabled,
+[aria-disabled="true"]:focus-visible {
+  outline: none;
+}
+
+.form-control {
+  font-family: var(--font-cyber);
+  font-size: 12px;
+}
+
+@media (min-width: 640px) {
+  .form-control {
+    font-size: 15px;
+  }
+}
+
+select.form-control:hover:not(:disabled),
+input.form-control:hover:not(:disabled),
+div.form-control:hover,
+input[type="color"]:hover:not(:disabled) {
+  border-color: var(--color-neon-cyan);
+}
+
+select.form-control:hover:not(:disabled) {
+  color: var(--color-neon-cyan);
+}
+
 .color-input {
   overflow: hidden;
 }
@@ -14,4 +54,45 @@
 .color-input::-moz-color-swatch {
   border: 0;
   border-radius: 0.5rem;
+}
+
+.logo-size-slider {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  padding-inline: 0.5rem;
+  touch-action: none;
+}
+
+.logo-size-slider:focus-visible {
+  outline: none;
+}
+
+.logo-size-slider:focus-visible .logo-size-slider-fill,
+.logo-size-slider:focus-visible .logo-size-slider-thumb {
+  background: var(--color-neon-cyan);
+}
+
+.logo-size-slider-track {
+  background: var(--color-ink-muted);
+  border-radius: 9999px;
+  height: 0.25rem;
+  position: relative;
+  width: 100%;
+}
+
+.logo-size-slider-fill {
+  background: var(--color-slider);
+  border-radius: inherit;
+  height: 100%;
+}
+
+.logo-size-slider-thumb {
+  background: var(--color-slider);
+  border-radius: 9999px;
+  height: 1rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1rem;
 }

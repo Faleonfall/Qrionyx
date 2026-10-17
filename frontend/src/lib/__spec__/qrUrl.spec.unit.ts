@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { formatPreviewUrl, isValidQrUrl } from "../url";
+import {
+  formatPreviewUrl,
+  isValidQrUrl,
+  PREVIEW_URL_PLACEHOLDER,
+} from "../qrUrl";
 
 describe("isValidQrUrl", () => {
   it("accepts a domain with or without a scheme", () => {
@@ -30,6 +34,6 @@ describe("formatPreviewUrl", () => {
   });
 
   it("shows a placeholder for an empty url", () => {
-    expect(formatPreviewUrl("")).toBe("Waiting for a URL...");
+    expect(formatPreviewUrl("")).toBe(PREVIEW_URL_PLACEHOLDER);
   });
 });
