@@ -1,0 +1,17 @@
+{
+  "name": "qrionyx",
+  "short_name": "qrionyx",
+  "description": "Generate styled QR codes locally with qrionyx.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071018",
+  "theme_color": "#071018",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+.color-input {
+  overflow: hidden;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-input::-webkit-color-swatch {
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.color-input::-moz-color-swatch {
+  border: 0;
+  border-radius: 0.5rem;
+}
