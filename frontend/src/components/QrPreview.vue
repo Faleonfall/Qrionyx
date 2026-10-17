@@ -1,5 +1,5 @@
 <template>
-  <div class="self-center">
+  <div>
     <div class="relative">
       <!-- Badge position for desktop (outside top) -->
       <div

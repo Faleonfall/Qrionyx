@@ -1,27 +1,18 @@
 <template>
   <form
-    class="rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 p-5 shadow-2xl shadow-black/30"
+    class="border border-transparent p-5 pt-3.5 sm:pt-1 max-lg:mt-5 max-lg:panel-card lg:border-t-0 lg:pt-0"
     @submit.prevent
   >
-    <QrUrlField :url="url" @update:url="$emit('update:url', $event)" />
-
     <div
       class="transition-opacity"
       :class="{ 'pointer-events-none opacity-40': !hasQr }"
     >
-      <QrSectionSwitch
-        :active-section="activeSection"
-        @update:active-section="updateActiveSection"
-      />
+      <QrSectionSwitch v-model:active-section="activeSection" />
 
       <div class="relative overflow-hidden w-full">
         <div
           class="transition-all duration-150 ease-in-out"
-          :class="
-            activeSection === 'basic'
-              ? 'relative z-10 translate-x-0 opacity-100'
-              : 'absolute left-0 top-0 w-full pointer-events-none z-0 -translate-x-8 opacity-0'
-          "
+          :class="getSectionPanelClass(activeSection, 'basic')"
         >
           <QrBasicControls
             :background-color="backgroundColor"
@@ -33,29 +24,25 @@
             :filename="filename"
             :margin-level="marginLevel"
             :qr-color="qrColor"
-            @update:background-color="$emit('update:backgroundColor', $event)"
+            @update:background-color="emit('update:backgroundColor', $event)"
             @update:background-transparent="
-              $emit('update:backgroundTransparent', $event)
+              emit('update:backgroundTransparent', $event)
             "
-            @update:corner-type="$emit('update:cornerType', $event)"
-            @update:dot-type="$emit('update:dotType', $event)"
+            @update:corner-type="emit('update:cornerType', $event)"
+            @update:dot-type="emit('update:dotType', $event)"
             @update:error-correction-level="
-              $emit('update:errorCorrectionLevel', $event)
+              emit('update:errorCorrectionLevel', $event)
             "
-            @update:export-size="$emit('update:exportSize', $event)"
-            @update:filename="$emit('update:filename', $event)"
-            @update:margin-level="$emit('update:marginLevel', $event)"
-            @update:qr-color="$emit('update:qrColor', $event)"
+            @update:export-size="emit('update:exportSize', $event)"
+            @update:filename="emit('update:filename', $event)"
+            @update:margin-level="emit('update:marginLevel', $event)"
+            @update:qr-color="emit('update:qrColor', $event)"
           />
         </div>
 
         <div
           class="transition-all duration-150 ease-in-out"
-          :class="
-            activeSection === 'advanced'
-              ? 'relative z-10 translate-x-0 opacity-100'
-              : 'absolute left-0 top-0 w-full pointer-events-none z-0 translate-x-8 opacity-0'
-          "
+          :class="getSectionPanelClass(activeSection, 'advanced')"
         >
           <QrAdvancedControls
             :key="advancedResetKey"
@@ -72,50 +59,49 @@
             :image-size-max-percent="imageSizeMaxPercent"
             :rendered-logo-size="renderedLogoSize"
             :shape-type="shapeType"
-            @update:background-round="$emit('update:backgroundRound', $event)"
-            @update:corner-dot-color="$emit('update:cornerDotColor', $event)"
+            @update:background-round="emit('update:backgroundRound', $event)"
+            @update:corner-dot-color="emit('update:cornerDotColor', $event)"
             @update:corner-square-color="
-              $emit('update:cornerSquareColor', $event)
+              emit('update:cornerSquareColor', $event)
             "
             @update:dots-gradient-end-color="
-              $emit('update:dotsGradientEndColor', $event)
+              emit('update:dotsGradientEndColor', $event)
             "
             @update:dots-gradient-start-color="
-              $emit('update:dotsGradientStartColor', $event)
+              emit('update:dotsGradientStartColor', $event)
             "
-            @update:dots-gradient-type="
-              $emit('update:dotsGradientType', $event)
-            "
+            @update:dots-gradient-type="emit('update:dotsGradientType', $event)"
             @update:hide-background-dots="
-              $emit('update:hideBackgroundDots', $event)
+              emit('update:hideBackgroundDots', $event)
             "
-            @update:image-margin="$emit('update:imageMargin', $event)"
-            @update:image-size="$emit('update:imageSize', $event)"
-            @update:logo-file="$emit('update:logoFile', $event)"
-            @update:shape-type="$emit('update:shapeType', $event)"
+            @update:image-margin="emit('update:imageMargin', $event)"
+            @update:image-size="emit('update:imageSize', $event)"
+            @update:logo-file="emit('update:logoFile', $event)"
+            @update:shape-type="emit('update:shapeType', $event)"
           />
         </div>
       </div>
 
       <QrExportActions
         :can-download="canDownload"
-        @download-png="$emit('download-png')"
-        @download-svg="$emit('download-svg')"
-        @download-webp="$emit('download-webp')"
-        @reset="$emit('reset')"
+        @download-png="emit('download-png')"
+        @download-svg="emit('download-svg')"
+        @download-webp="emit('download-webp')"
+        @reset="emit('reset')"
       />
     </div>
   </form>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type {
   CornerSquareType,
   DotType,
   ErrorCorrectionLevel,
   ShapeType,
 } from "qr-code-styling";
-import { defineComponent, ref, type PropType } from "vue";
+import { ref } from "vue";
+import { getSectionPanelClass } from "../lib/formDisplay";
 import type {
   ExportSize,
   FormSection,
@@ -126,163 +112,61 @@ import QrAdvancedControls from "./QrAdvancedControls.vue";
 import QrBasicControls from "./QrBasicControls.vue";
 import QrExportActions from "./QrExportActions.vue";
 import QrSectionSwitch from "./QrSectionSwitch.vue";
-import QrUrlField from "./QrUrlField.vue";
 
-export default defineComponent({
-  name: "QrForm",
-  components: {
-    QrAdvancedControls,
-    QrBasicControls,
-    QrExportActions,
-    QrSectionSwitch,
-    QrUrlField,
-  },
-  props: {
-    advancedResetKey: {
-      type: Number,
-      required: true,
-    },
-    backgroundColor: {
-      type: String,
-      required: true,
-    },
-    backgroundRound: {
-      type: Number,
-      required: true,
-    },
-    backgroundTransparent: {
-      type: Boolean,
-      required: true,
-    },
-    canDownload: {
-      type: Boolean,
-      required: true,
-    },
-    hasQr: {
-      type: Boolean,
-      required: true,
-    },
-    cornerDotColor: {
-      type: String,
-      required: true,
-    },
-    cornerSquareColor: {
-      type: String,
-      required: true,
-    },
-    cornerType: {
-      type: String as PropType<CornerSquareType>,
-      required: true,
-    },
-    dotType: {
-      type: String as PropType<DotType>,
-      required: true,
-    },
-    dotsGradientEndColor: {
-      type: String,
-      required: true,
-    },
-    dotsGradientStartColor: {
-      type: String,
-      required: true,
-    },
-    dotsGradientType: {
-      type: String as PropType<GradientMode>,
-      required: true,
-    },
-    errorCorrectionLevel: {
-      type: String as PropType<ErrorCorrectionLevel>,
-      required: true,
-    },
-    exportSize: {
-      type: Number as PropType<ExportSize>,
-      required: true,
-    },
-    filename: {
-      type: String,
-      required: true,
-    },
-    hasLogo: {
-      type: Boolean,
-      required: true,
-    },
-    hideBackgroundDots: {
-      type: Boolean,
-      required: true,
-    },
-    imageMargin: {
-      type: Number,
-      required: true,
-    },
-    imageSize: {
-      type: Number,
-      required: true,
-    },
-    imageSizeMaxPercent: {
-      type: Number,
-      required: true,
-    },
-    marginLevel: {
-      type: String as PropType<MarginLevel>,
-      required: true,
-    },
-    qrColor: {
-      type: String,
-      required: true,
-    },
-    renderedLogoSize: {
-      type: String,
-      required: true,
-    },
-    shapeType: {
-      type: String as PropType<ShapeType>,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-  },
-  emits: {
-    "download-png": null,
-    "download-svg": null,
-    "download-webp": null,
-    reset: null,
-    "update:backgroundColor": (value: string) => value.length > 0,
-    "update:backgroundRound": (value: number) => value >= 0,
-    "update:backgroundTransparent": (value: boolean) =>
-      typeof value === "boolean",
-    "update:cornerDotColor": (value: string) => value.length > 0,
-    "update:cornerSquareColor": (value: string) => value.length > 0,
-    "update:cornerType": (value: CornerSquareType) => value.length > 0,
-    "update:dotType": (value: DotType) => value.length > 0,
-    "update:dotsGradientEndColor": (value: string) => value.length > 0,
-    "update:dotsGradientStartColor": (value: string) => value.length > 0,
-    "update:dotsGradientType": (value: GradientMode) => value.length > 0,
-    "update:errorCorrectionLevel": (value: ErrorCorrectionLevel) =>
-      value.length > 0,
-    "update:exportSize": (value: ExportSize) =>
-      [512, 1024, 2048].includes(value),
-    "update:filename": (value: string) => typeof value === "string",
-    "update:hideBackgroundDots": (value: boolean) => typeof value === "boolean",
-    "update:imageMargin": (value: number) => value >= 0,
-    "update:imageSize": (value: number) => value > 0,
-    "update:logoFile": (value: File | null) => value === null || value.size > 0,
-    "update:marginLevel": (value: MarginLevel) => value.length > 0,
-    "update:qrColor": (value: string) => value.length > 0,
-    "update:shapeType": (value: ShapeType) => value.length > 0,
-    "update:url": (value: string) => typeof value === "string",
-  },
-  setup() {
-    const activeSection = ref<FormSection>("basic");
+defineProps<{
+  advancedResetKey: number;
+  backgroundColor: string;
+  backgroundRound: number;
+  backgroundTransparent: boolean;
+  canDownload: boolean;
+  hasQr: boolean;
+  cornerDotColor: string;
+  cornerSquareColor: string;
+  cornerType: CornerSquareType;
+  dotType: DotType;
+  dotsGradientEndColor: string;
+  dotsGradientStartColor: string;
+  dotsGradientType: GradientMode;
+  errorCorrectionLevel: ErrorCorrectionLevel;
+  exportSize: ExportSize;
+  filename: string;
+  hasLogo: boolean;
+  hideBackgroundDots: boolean;
+  imageMargin: number;
+  imageSize: number;
+  imageSizeMaxPercent: number;
+  marginLevel: MarginLevel;
+  qrColor: string;
+  renderedLogoSize: string;
+  shapeType: ShapeType;
+}>();
 
-    function updateActiveSection(value: string) {
-      if (value === "basic" || value === "advanced") {
-        activeSection.value = value;
-      }
-    }
+const emit = defineEmits<{
+  "download-png": [];
+  "download-svg": [];
+  "download-webp": [];
+  reset: [];
+  "update:backgroundColor": [value: string];
+  "update:backgroundRound": [value: number];
+  "update:backgroundTransparent": [value: boolean];
+  "update:cornerDotColor": [value: string];
+  "update:cornerSquareColor": [value: string];
+  "update:cornerType": [value: CornerSquareType];
+  "update:dotType": [value: DotType];
+  "update:dotsGradientEndColor": [value: string];
+  "update:dotsGradientStartColor": [value: string];
+  "update:dotsGradientType": [value: GradientMode];
+  "update:errorCorrectionLevel": [value: ErrorCorrectionLevel];
+  "update:exportSize": [value: ExportSize];
+  "update:filename": [value: string];
+  "update:hideBackgroundDots": [value: boolean];
+  "update:imageMargin": [value: number];
+  "update:imageSize": [value: number];
+  "update:logoFile": [value: File | null];
+  "update:marginLevel": [value: MarginLevel];
+  "update:qrColor": [value: string];
+  "update:shapeType": [value: ShapeType];
+}>();
 
-    return { activeSection, updateActiveSection };
-  },
-});
+const activeSection = ref<FormSection>("basic");
 </script>

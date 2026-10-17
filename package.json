@@ -1,9 +1,8 @@
 {
   "name": "qrionyx",
-  "version": "1.0.0",
   "private": true,
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite frontend",
     "build": "vite build frontend",
@@ -11,10 +10,6 @@
     "check": "vue-tsc --noEmit -p frontend/tsconfig.json && eslint .",
     "test": "vitest run --root frontend"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@lucide/vue": "^1.59.0",
     "jsqr": "^1.4.0",

@@ -1,8 +1,8 @@
-import { onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted, useTemplateRef } from "vue";
 import { loadImageNaturalSize } from "./logoImage";
 import { createQrExport } from "./qrExport";
 import { createQrGeneratorActions } from "./qrGeneratorActions";
-import { createQrGeneratorState } from "./qrGeneratorState";
+import { createQrGeneratorState, type QrPreviewRef } from "./qrGeneratorState";
 import { createQrPreviewRenderer } from "./qrPreviewRenderer";
 import {
   loadQrSession,
@@ -12,7 +12,9 @@ import {
 } from "../lib/qrSession";
 
 export function useQrGenerator() {
-  const state = createQrGeneratorState();
+  const state = createQrGeneratorState(
+    useTemplateRef<QrPreviewRef>("qrPreview"),
+  );
   const renderer = createQrPreviewRenderer(state);
   const actions = createQrGeneratorActions(state, renderer.updateQr);
   const qrExport = createQrExport(state);
@@ -84,7 +86,6 @@ export function useQrGenerator() {
     marginLevel: state.marginLevel,
     previewUrl: state.previewUrl,
     qrColor: state.qrColor,
-    qrPreview: state.qrPreview,
     qrUrl: state.qrUrl,
     renderedLogoSize: state.renderedLogoSize,
     resetQr,

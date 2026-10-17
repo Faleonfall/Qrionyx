@@ -1,0 +1,44 @@
+/* Below the desktop layout the preview stays collapsed until a QR exists,
+   then grows in between the URL field and the controls */
+@media (width < 64rem) {
+  .generator-preview {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      grid-template-rows 0.3s ease,
+      margin-top 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .generator-preview > * {
+    min-height: 0;
+  }
+
+  /* Unclip once grown so the panel shadow shows */
+  .generator-preview.is-open {
+    grid-template-rows: 1fr;
+    margin-top: calc(var(--spacing) * 5);
+    opacity: 1;
+    animation: generator-preview-unclip 0s 0.3s forwards;
+  }
+}
+
+@media (width < 64rem) and (prefers-reduced-motion: reduce) {
+  .generator-preview {
+    transition: none;
+  }
+
+  .generator-preview.is-open {
+    animation: none;
+    overflow: visible;
+  }
+}
+
+@keyframes generator-preview-unclip {
+  to {
+    overflow: visible;
+  }
+}

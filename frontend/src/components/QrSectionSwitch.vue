@@ -10,7 +10,7 @@
 
     <button
       class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[11px] sm:text-[12px] transition-colors duration-150"
-      :class="getSectionClass('basic')"
+      :class="getSectionClass(activeSection, 'basic')"
       type="button"
       @click="$emit('update:activeSection', 'basic')"
     >
@@ -18,7 +18,7 @@
     </button>
     <button
       class="form-control relative z-10 flex h-full cursor-pointer select-none items-center justify-center rounded-lg border border-transparent text-[11px] sm:text-[12px] transition-colors duration-150"
-      :class="getSectionClass('advanced')"
+      :class="getSectionClass(activeSection, 'advanced')"
       type="button"
       @click="$emit('update:activeSection', 'advanced')"
     >
@@ -27,30 +27,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, type PropType } from "vue";
+<script setup lang="ts">
+import { getSectionClass } from "../lib/formDisplay";
 import type { FormSection } from "../qr/qrTypes";
 
-export default defineComponent({
-  name: "QrSectionSwitch",
-  props: {
-    activeSection: {
-      type: String as PropType<FormSection>,
-      required: true,
-    },
-  },
-  emits: {
-    "update:activeSection": (value: string) =>
-      value === "basic" || value === "advanced",
-  },
-  setup(props) {
-    function getSectionClass(section: FormSection) {
-      return props.activeSection === section
-        ? "text-(--color-cyber-background) font-bold"
-        : "text-(--color-text-muted) hover:text-(--color-neon-cyan)";
-    }
+defineProps<{ activeSection: FormSection }>();
 
-    return { getSectionClass };
-  },
-});
+defineEmits<{ "update:activeSection": [value: FormSection] }>();
 </script>

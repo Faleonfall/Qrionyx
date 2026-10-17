@@ -4,7 +4,7 @@ import type {
   ErrorCorrectionLevel,
   ShapeType,
 } from "qr-code-styling";
-import { computed, ref } from "vue";
+import { computed, ref, type ShallowRef } from "vue";
 import { getLogoSizeMaxPercent } from "./logoSizeLimit";
 import type { ImageNaturalSize } from "./logoImage";
 import {
@@ -31,8 +31,9 @@ export type QrPreviewRef = {
   container: HTMLElement | null;
 };
 
-export function createQrGeneratorState() {
-  const qrPreview = ref<QrPreviewRef | null>(null);
+export function createQrGeneratorState(
+  qrPreview: Readonly<ShallowRef<QrPreviewRef | null>>,
+) {
   const qrUrl = ref("");
   const qrColor = ref(DEFAULT_QR_COLOR);
   const backgroundColor = ref(DEFAULT_BACKGROUND_COLOR);

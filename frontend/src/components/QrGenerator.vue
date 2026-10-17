@@ -2,8 +2,8 @@
   <section
     class="app-shell mx-auto flex min-h-svh w-full max-w-304 flex-col justify-start lg:justify-center px-4 sm:px-7"
   >
-    <header class="flex w-full items-start justify-between gap-4">
-      <div class="max-w-2xl">
+    <header class="flex w-full items-center justify-between gap-4">
+      <div>
         <p
           class="select-none text-xs uppercase tracking-[0.32em] text-(--color-neon-cyan)"
         >
@@ -14,16 +14,10 @@
         >
           Local styled QR generator
         </h1>
-        <p
-          class="mt-3 select-none text-sm leading-6 text-(--color-text-muted) md:text-base"
-        >
-          Generate the QR code in your browser. No backend, no upload, just
-          local rendering.
-        </p>
       </div>
       <button
-        class="theme-toggle-btn flex items-center justify-center lg:hidden"
-        :title="`Switch to ${activeTheme === 'dark' ? 'light' : 'dark'} theme`"
+        class="theme-toggle-btn flex items-center justify-center"
+        :title="toggleLabel"
         @click="toggleTheme"
       >
         <Moon v-if="activeTheme === 'dark'" :size="18" />
@@ -32,9 +26,37 @@
     </header>
 
     <div
-      class="mx-auto grid w-full gap-5 lg:grid-cols-[minmax(0,840px)_350px] max-w-2xl lg:max-w-none"
+      class="mx-auto grid w-full max-w-2xl lg:max-w-none lg:grid-cols-[minmax(0,840px)_350px] lg:gap-x-5"
     >
+      <!-- One card behind the URL field and the controls on desktop -->
+      <div
+        class="hidden lg:block panel-card lg:col-start-1 lg:row-start-1 lg:row-span-2"
+      ></div>
+
+      <div
+        class="border border-transparent p-5 pt-3.5 max-lg:panel-card lg:col-start-1 lg:row-start-1 lg:border-b-0 lg:pb-0"
+      >
+        <QrUrlField :url="qrUrl" @update:url="updateUrl" />
+      </div>
+
+      <div
+        class="generator-preview lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center"
+        :class="{ 'is-open': hasQr }"
+      >
+        <QrPreview
+          ref="qrPreview"
+          :background-color="backgroundColor"
+          :background-round="backgroundRound"
+          :background-transparent="backgroundTransparent"
+          :has-qr="hasQr"
+          :preview-url="previewUrl"
+          :scan-status="scanStatus"
+          :title="qrUrl || 'Waiting for a URL...'"
+        />
+      </div>
+
       <QrForm
+        class="lg:col-start-1 lg:row-start-2"
         :advanced-reset-key="advancedResetKey"
         :background-color="backgroundColor"
         :background-round="backgroundRound"
@@ -60,7 +82,6 @@
         :qr-color="qrColor"
         :rendered-logo-size="renderedLogoSize"
         :shape-type="shapeType"
-        :url="qrUrl"
         @download-png="downloadPng"
         @download-svg="downloadSvg"
         @download-webp="downloadWebp"
@@ -85,24 +106,11 @@
         @update:margin-level="updateMarginLevel"
         @update:qr-color="updateQrColor"
         @update:shape-type="updateShapeType"
-        @update:url="updateUrl"
-      />
-
-      <QrPreview
-        ref="qrPreview"
-        :background-color="backgroundColor"
-        :background-round="backgroundRound"
-        :background-transparent="backgroundTransparent"
-        :has-qr="hasQr"
-        :preview-url="previewUrl"
-        :scan-status="scanStatus"
-        :title="qrUrl || 'Waiting for a URL...'"
       />
     </div>
 
     <!-- Inline Footer container -->
     <footer class="app-footer-container select-none">
-      <div class="hidden lg:block w-10 h-10"></div>
       <div class="app-footer-inline">
         <span>&copy; 2026 Qrionyx</span>
         <span class="footer-divider">•</span>
@@ -117,65 +125,73 @@
         <span class="footer-divider">•</span>
         <span>Processed completely in-browser on your local machine.</span>
       </div>
-      <button
-        class="theme-toggle-btn hidden lg:flex items-center justify-center"
-        :title="`Switch to ${activeTheme === 'dark' ? 'light' : 'dark'} theme`"
-        @click="toggleTheme"
-      >
-        <Moon v-if="activeTheme === 'dark'" :size="18" />
-        <Sun v-else :size="18" />
-      </button>
     </footer>
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+<script setup lang="ts">
+import { Moon, Sun } from "@lucide/vue";
+import { useTheme } from "../composables/useTheme";
 import { useQrGenerator } from "../qr/useQrGenerator";
-import { loadTheme, saveTheme, type AppTheme } from "../lib/themePreference";
-import { Sun, Moon } from "@lucide/vue";
 import QrForm from "./QrForm.vue";
 import QrPreview from "./QrPreview.vue";
+import QrUrlField from "./QrUrlField.vue";
 
-export default defineComponent({
-  name: "QrGenerator",
-  components: { QrForm, QrPreview, Sun, Moon },
-  setup() {
-    const qrGenerator = useQrGenerator();
+const { activeTheme, toggleLabel, toggleTheme } = useTheme();
 
-    // Theme Switcher State
-    const activeTheme = ref<AppTheme>("dark");
-
-    const applyTheme = (theme: AppTheme): void => {
-      activeTheme.value = theme;
-      document.documentElement.setAttribute("data-theme", theme);
-    };
-
-    const toggleTheme = (): void => {
-      const newTheme = activeTheme.value === "dark" ? "light" : "dark";
-      applyTheme(newTheme);
-      saveTheme(newTheme);
-    };
-
-    onMounted(() => {
-      // Saved choice wins, else fall back to system prefers-color-scheme
-      const savedTheme = loadTheme();
-      if (savedTheme) {
-        applyTheme(savedTheme);
-        return;
-      }
-
-      const systemPrefersLight = window.matchMedia(
-        "(prefers-color-scheme: light)",
-      ).matches;
-      applyTheme(systemPrefersLight ? "light" : "dark");
-    });
-
-    return {
-      ...qrGenerator,
-      activeTheme,
-      toggleTheme,
-    };
-  },
-});
+const {
+  advancedResetKey,
+  backgroundColor,
+  backgroundRound,
+  backgroundTransparent,
+  canDownload,
+  cornerDotColor,
+  cornerSquareColor,
+  cornerType,
+  dotType,
+  dotsGradientEndColor,
+  dotsGradientStartColor,
+  dotsGradientType,
+  downloadPng,
+  downloadSvg,
+  downloadWebp,
+  errorCorrectionLevel,
+  exportSize,
+  filename,
+  hasLogo,
+  hasQr,
+  hideBackgroundDots,
+  imageMargin,
+  imageSize,
+  imageSizeMaxPercent,
+  marginLevel,
+  previewUrl,
+  qrColor,
+  qrUrl,
+  renderedLogoSize,
+  resetQr,
+  scanStatus,
+  shapeType,
+  updateBackgroundColor,
+  updateBackgroundRound,
+  updateBackgroundTransparent,
+  updateCornerDotColor,
+  updateCornerSquareColor,
+  updateCornerType,
+  updateDotType,
+  updateDotsGradientEndColor,
+  updateDotsGradientStartColor,
+  updateDotsGradientType,
+  updateErrorCorrectionLevel,
+  updateExportSize,
+  updateFilename,
+  updateHideBackgroundDots,
+  updateImageMargin,
+  updateImageSize,
+  updateLogoFile,
+  updateMarginLevel,
+  updateQrColor,
+  updateShapeType,
+  updateUrl,
+} = useQrGenerator();
 </script>

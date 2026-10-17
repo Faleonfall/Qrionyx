@@ -21,6 +21,18 @@ export function loadTheme(): AppTheme | null {
   }
 }
 
+export function getNextTheme(theme: AppTheme): AppTheme {
+  return theme === "dark" ? "light" : "dark";
+}
+
+export function getThemeToggleLabel(theme: AppTheme) {
+  return `Switch to ${getNextTheme(theme)} theme`;
+}
+
+export function getFaviconHref(theme: AppTheme, baseUrl: string) {
+  return `${baseUrl}favicon-${theme}.svg`;
+}
+
 export function saveTheme(theme: AppTheme) {
   try {
     globalThis.localStorage.setItem(themeStorageKey, theme);

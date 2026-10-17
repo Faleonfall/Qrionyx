@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @import "./styles/controls.css";
+@import "./styles/generator.css";
+
+@utility panel-card {
+  @apply rounded-2xl border border-(--color-panel-border) bg-(--color-panel)/80 shadow-2xl shadow-black/30;
+}
 
 :root {
   --color-cyber-background: #071018;
@@ -119,7 +124,7 @@ select.form-control:hover:not(:disabled) {
   color: var(--color-text-muted);
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: var(--radius-2xl);
   cursor: pointer;
   transition: all 0.3s ease;
   flex-shrink: 0;
@@ -154,15 +159,7 @@ select.form-control:hover:not(:disabled) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
   width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .app-footer-container {
-    flex-direction: row;
-    justify-content: space-between;
-  }
 }
 
 .app-footer-inline {
@@ -207,8 +204,5 @@ select.form-control:hover:not(:disabled) {
   .app-shell {
     --shell-pad-y: 12px;
     gap: 12px;
-  }
-  .app-footer-container {
-    gap: 8px;
   }
 }
